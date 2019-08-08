@@ -2,30 +2,31 @@ package com.stratumn.chainscript;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.junit.jupiter.api.Test;
 
-import com.stratumn.canonicaljson.CanonicalJson;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.stratumn.chainscript.testcases.EvidencesTest;
 import com.stratumn.chainscript.testcases.ITestCase;
 import com.stratumn.chainscript.testcases.ReferencesTest;
 import com.stratumn.chainscript.testcases.SignaturesTest;
-import com.stratumn.chainscript.testcases.SimpleSegmentTest; 
+import com.stratumn.chainscript.testcases.SimpleSegmentTest;
+import com.stratumn.chainscript.testcases.TestCaseResult; 
 
 class ChainscriptTest
 {
 
    static List<ITestCase> TestCases =  
       Arrays.asList(new ITestCase[] { 
+         new  SimpleSegmentTest(),
          new ReferencesTest(),
          new EvidencesTest(),
-         new SignaturesTest(),
-         new  SimpleSegmentTest()
+         new SignaturesTest() 
+         
       }) ; 
    
    @Test
@@ -53,9 +54,7 @@ class ChainscriptTest
          System.out.println("Usage: ChainscriptTest action[generate|validate] <file Path> ");
          System.out.println("For generate, filePath is output file.");
          System.out.println("For validate, filePath is input file.");
-//         System.out.println("If Parameter is a folder, searches for all subfolders with input.json (and expected.json)."
-//            + "\rReads/parses DataFolder/input.json then serializes it to canonical json and write output.json in same folder. "
-//            + "\rCompares output to expected.json if found under same folder. ");
+ 
          System.exit(-1);
       }
       String action = args[0];
@@ -89,30 +88,30 @@ class ChainscriptTest
       System.out.println("Loading encoded segments from " + inputFile.getAbsolutePath());
  
       String jsonData = new String(Files.readAllBytes(inputFile.toPath()));
-      @SuppressWarnings("unchecked")
-      Map<String,Object> data = (Map<String, Object>) CanonicalJson.parse(jsonData);
+      TestCaseResult[] resultArr = new Gson().fromJson(jsonData, TestCaseResult[].class);
+      
       ITestCase testCase ;
-      for ( Entry<String, Object> entry: data.entrySet())
+      for ( TestCaseResult result: resultArr)
       { 
-         if (entry.getKey().equalsIgnoreCase(SimpleSegmentTest.id))
+         if (result.getId().equalsIgnoreCase(SimpleSegmentTest.id))
             testCase = new SimpleSegmentTest();
-         else if (entry.getKey().equalsIgnoreCase(SignaturesTest.id))
+         else if (result.getId().equalsIgnoreCase(SignaturesTest.id))
             testCase = new SignaturesTest();
-         else if (entry.getKey().equalsIgnoreCase(ReferencesTest.id))
+         else if (result.getId().equalsIgnoreCase(ReferencesTest.id))
             testCase = new ReferencesTest();
-         else if (entry.getKey().equalsIgnoreCase(EvidencesTest.id))
+         else if (result.getId().equalsIgnoreCase(EvidencesTest.id))
             testCase = new EvidencesTest();
          else
-         {   System.err.println("Unknown test case : " + entry.getKey());
+         {   System.err.println("Unknown test case : " + result.getId());
            
            continue;
          }
           
          try {
-          testCase.validate((String) entry.getValue());
-          System.out.println(entry.getKey() + " SUCCESS "  );
+          testCase.validate( result.getData());
+          System.out.println(result.getId() + " SUCCESS "  );
          }catch (Exception e) {
-            System.err.println(entry.getKey() + " FAILED " + e.getMessage());
+            System.err.println(result.getId() + " FAILED " + e.getMessage());
           
          } 
       }
@@ -126,22 +125,25 @@ class ChainscriptTest
     */
    private static void generate(File outputFile) throws Exception
    {
-       Map<String,String> results = new HashMap<String,String>();
+       List<TestCaseResult> results = new ArrayList<TestCaseResult>();
        for (ITestCase tcase: TestCases)
        {
           try
          {
-            results.put(tcase.getId(), tcase.generate());
+            results.add(new TestCaseResult(tcase.getId(), tcase.generate()));
          }
          catch(Exception e)
          {  e.printStackTrace();
-            results.put(tcase.getId(), e.getMessage());
+            results.add(new TestCaseResult(tcase.getId(),  e.getMessage()));
          }
        }
        
        System.out.println ("Saving encoded segments to " + outputFile.getAbsolutePath()  );
-       String resultStr = CanonicalJson.stringify(results);
+       String resultStr = (new GsonBuilder().setPrettyPrinting().create()).toJson(results);
        Files.write(outputFile.toPath(), resultStr.getBytes() );
    }
+   
+   
+   
 
 }
