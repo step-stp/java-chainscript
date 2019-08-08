@@ -82,6 +82,7 @@ public final class Chainscript {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:stratumn.chainscript.Segment)
       SegmentOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use Segment.newBuilder() to construct.
     private Segment(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -90,16 +91,27 @@ public final class Chainscript {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Segment();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private Segment(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
-      int mutable_bitField0_ = 0;
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -108,12 +120,6 @@ public final class Chainscript {
             case 0:
               done = true;
               break;
-            default: {
-              if (!input.skipField(tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               stratumn.chainscript.Chainscript.Link.Builder subBuilder = null;
               if (link_ != null) {
@@ -140,6 +146,13 @@ public final class Chainscript {
 
               break;
             }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -148,6 +161,7 @@ public final class Chainscript {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -156,6 +170,7 @@ public final class Chainscript {
       return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Segment_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Segment_fieldAccessorTable
@@ -233,6 +248,7 @@ public final class Chainscript {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -242,6 +258,7 @@ public final class Chainscript {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (link_ != null) {
@@ -250,8 +267,10 @@ public final class Chainscript {
       if (meta_ != null) {
         output.writeMessage(2, getMeta());
       }
+      unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -265,11 +284,11 @@ public final class Chainscript {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, getMeta());
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -280,18 +299,18 @@ public final class Chainscript {
       }
       stratumn.chainscript.Chainscript.Segment other = (stratumn.chainscript.Chainscript.Segment) obj;
 
-      boolean result = true;
-      result = result && (hasLink() == other.hasLink());
+      if (hasLink() != other.hasLink()) return false;
       if (hasLink()) {
-        result = result && getLink()
-            .equals(other.getLink());
+        if (!getLink()
+            .equals(other.getLink())) return false;
       }
-      result = result && (hasMeta() == other.hasMeta());
+      if (hasMeta() != other.hasMeta()) return false;
       if (hasMeta()) {
-        result = result && getMeta()
-            .equals(other.getMeta());
+        if (!getMeta()
+            .equals(other.getMeta())) return false;
       }
-      return result;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -314,6 +333,17 @@ public final class Chainscript {
       return hash;
     }
 
+    public static stratumn.chainscript.Chainscript.Segment parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static stratumn.chainscript.Chainscript.Segment parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static stratumn.chainscript.Chainscript.Segment parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -373,6 +403,7 @@ public final class Chainscript {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -380,6 +411,7 @@ public final class Chainscript {
     public static Builder newBuilder(stratumn.chainscript.Chainscript.Segment prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -407,6 +439,7 @@ public final class Chainscript {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Segment_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Segment_fieldAccessorTable
@@ -429,6 +462,7 @@ public final class Chainscript {
                 .alwaysUseFieldBuilders) {
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         if (linkBuilder_ == null) {
@@ -446,15 +480,18 @@ public final class Chainscript {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Segment_descriptor;
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.Segment getDefaultInstanceForType() {
         return stratumn.chainscript.Chainscript.Segment.getDefaultInstance();
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.Segment build() {
         stratumn.chainscript.Chainscript.Segment result = buildPartial();
         if (!result.isInitialized()) {
@@ -463,6 +500,7 @@ public final class Chainscript {
         return result;
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.Segment buildPartial() {
         stratumn.chainscript.Chainscript.Segment result = new stratumn.chainscript.Chainscript.Segment(this);
         if (linkBuilder_ == null) {
@@ -479,32 +517,39 @@ public final class Chainscript {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return (Builder) super.setField(field, value);
+          java.lang.Object value) {
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof stratumn.chainscript.Chainscript.Segment) {
           return mergeFrom((stratumn.chainscript.Chainscript.Segment)other);
@@ -522,14 +567,17 @@ public final class Chainscript {
         if (other.hasMeta()) {
           mergeMeta(other.getMeta());
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -548,7 +596,7 @@ public final class Chainscript {
         return this;
       }
 
-      private stratumn.chainscript.Chainscript.Link link_ = null;
+      private stratumn.chainscript.Chainscript.Link link_;
       private com.google.protobuf.SingleFieldBuilderV3<
           stratumn.chainscript.Chainscript.Link, stratumn.chainscript.Chainscript.Link.Builder, stratumn.chainscript.Chainscript.LinkOrBuilder> linkBuilder_;
       /**
@@ -710,7 +758,7 @@ public final class Chainscript {
         return linkBuilder_;
       }
 
-      private stratumn.chainscript.Chainscript.SegmentMeta meta_ = null;
+      private stratumn.chainscript.Chainscript.SegmentMeta meta_;
       private com.google.protobuf.SingleFieldBuilderV3<
           stratumn.chainscript.Chainscript.SegmentMeta, stratumn.chainscript.Chainscript.SegmentMeta.Builder, stratumn.chainscript.Chainscript.SegmentMetaOrBuilder> metaBuilder_;
       /**
@@ -862,14 +910,16 @@ public final class Chainscript {
         }
         return metaBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -888,11 +938,12 @@ public final class Chainscript {
 
     private static final com.google.protobuf.Parser<Segment>
         PARSER = new com.google.protobuf.AbstractParser<Segment>() {
+      @java.lang.Override
       public Segment parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Segment(input, extensionRegistry);
+        return new Segment(input, extensionRegistry);
       }
     };
 
@@ -905,6 +956,7 @@ public final class Chainscript {
       return PARSER;
     }
 
+    @java.lang.Override
     public stratumn.chainscript.Chainscript.Segment getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -981,6 +1033,7 @@ public final class Chainscript {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:stratumn.chainscript.SegmentMeta)
       SegmentMetaOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use SegmentMeta.newBuilder() to construct.
     private SegmentMeta(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -991,16 +1044,28 @@ public final class Chainscript {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new SegmentMeta();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private SegmentMeta(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -1009,24 +1074,25 @@ public final class Chainscript {
             case 0:
               done = true;
               break;
-            default: {
-              if (!input.skipField(tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
 
               linkHash_ = input.readBytes();
               break;
             }
             case 82: {
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
                 evidences_ = new java.util.ArrayList<stratumn.chainscript.Chainscript.Evidence>();
-                mutable_bitField0_ |= 0x00000002;
+                mutable_bitField0_ |= 0x00000001;
               }
               evidences_.add(
                   input.readMessage(stratumn.chainscript.Chainscript.Evidence.parser(), extensionRegistry));
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
               break;
             }
           }
@@ -1037,9 +1103,10 @@ public final class Chainscript {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
           evidences_ = java.util.Collections.unmodifiableList(evidences_);
         }
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -1048,6 +1115,7 @@ public final class Chainscript {
       return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_SegmentMeta_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_SegmentMeta_fieldAccessorTable
@@ -1055,7 +1123,6 @@ public final class Chainscript {
               stratumn.chainscript.Chainscript.SegmentMeta.class, stratumn.chainscript.Chainscript.SegmentMeta.Builder.class);
     }
 
-    private int bitField0_;
     public static final int LINK_HASH_FIELD_NUMBER = 1;
     private com.google.protobuf.ByteString linkHash_;
     /**
@@ -1125,6 +1192,7 @@ public final class Chainscript {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -1134,6 +1202,7 @@ public final class Chainscript {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!linkHash_.isEmpty()) {
@@ -1142,8 +1211,10 @@ public final class Chainscript {
       for (int i = 0; i < evidences_.size(); i++) {
         output.writeMessage(10, evidences_.get(i));
       }
+      unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -1157,11 +1228,11 @@ public final class Chainscript {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(10, evidences_.get(i));
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -1172,12 +1243,12 @@ public final class Chainscript {
       }
       stratumn.chainscript.Chainscript.SegmentMeta other = (stratumn.chainscript.Chainscript.SegmentMeta) obj;
 
-      boolean result = true;
-      result = result && getLinkHash()
-          .equals(other.getLinkHash());
-      result = result && getEvidencesList()
-          .equals(other.getEvidencesList());
-      return result;
+      if (!getLinkHash()
+          .equals(other.getLinkHash())) return false;
+      if (!getEvidencesList()
+          .equals(other.getEvidencesList())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -1198,6 +1269,17 @@ public final class Chainscript {
       return hash;
     }
 
+    public static stratumn.chainscript.Chainscript.SegmentMeta parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static stratumn.chainscript.Chainscript.SegmentMeta parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static stratumn.chainscript.Chainscript.SegmentMeta parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1257,6 +1339,7 @@ public final class Chainscript {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -1264,6 +1347,7 @@ public final class Chainscript {
     public static Builder newBuilder(stratumn.chainscript.Chainscript.SegmentMeta prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -1293,6 +1377,7 @@ public final class Chainscript {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_SegmentMeta_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_SegmentMeta_fieldAccessorTable
@@ -1316,28 +1401,32 @@ public final class Chainscript {
           getEvidencesFieldBuilder();
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         linkHash_ = com.google.protobuf.ByteString.EMPTY;
 
         if (evidencesBuilder_ == null) {
           evidences_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000001);
         } else {
           evidencesBuilder_.clear();
         }
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_SegmentMeta_descriptor;
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.SegmentMeta getDefaultInstanceForType() {
         return stratumn.chainscript.Chainscript.SegmentMeta.getDefaultInstance();
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.SegmentMeta build() {
         stratumn.chainscript.Chainscript.SegmentMeta result = buildPartial();
         if (!result.isInitialized()) {
@@ -1346,51 +1435,57 @@ public final class Chainscript {
         return result;
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.SegmentMeta buildPartial() {
         stratumn.chainscript.Chainscript.SegmentMeta result = new stratumn.chainscript.Chainscript.SegmentMeta(this);
         int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
         result.linkHash_ = linkHash_;
         if (evidencesBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          if (((bitField0_ & 0x00000001) != 0)) {
             evidences_ = java.util.Collections.unmodifiableList(evidences_);
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000001);
           }
           result.evidences_ = evidences_;
         } else {
           result.evidences_ = evidencesBuilder_.build();
         }
-        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return (Builder) super.setField(field, value);
+          java.lang.Object value) {
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof stratumn.chainscript.Chainscript.SegmentMeta) {
           return mergeFrom((stratumn.chainscript.Chainscript.SegmentMeta)other);
@@ -1409,7 +1504,7 @@ public final class Chainscript {
           if (!other.evidences_.isEmpty()) {
             if (evidences_.isEmpty()) {
               evidences_ = other.evidences_;
-              bitField0_ = (bitField0_ & ~0x00000002);
+              bitField0_ = (bitField0_ & ~0x00000001);
             } else {
               ensureEvidencesIsMutable();
               evidences_.addAll(other.evidences_);
@@ -1422,7 +1517,7 @@ public final class Chainscript {
               evidencesBuilder_.dispose();
               evidencesBuilder_ = null;
               evidences_ = other.evidences_;
-              bitField0_ = (bitField0_ & ~0x00000002);
+              bitField0_ = (bitField0_ & ~0x00000001);
               evidencesBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                    getEvidencesFieldBuilder() : null;
@@ -1431,14 +1526,17 @@ public final class Chainscript {
             }
           }
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1502,9 +1600,9 @@ public final class Chainscript {
       private java.util.List<stratumn.chainscript.Chainscript.Evidence> evidences_ =
         java.util.Collections.emptyList();
       private void ensureEvidencesIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           evidences_ = new java.util.ArrayList<stratumn.chainscript.Chainscript.Evidence>(evidences_);
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000001;
          }
       }
 
@@ -1698,7 +1796,7 @@ public final class Chainscript {
       public Builder clearEvidences() {
         if (evidencesBuilder_ == null) {
           evidences_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000001);
           onChanged();
         } else {
           evidencesBuilder_.clear();
@@ -1803,21 +1901,23 @@ public final class Chainscript {
           evidencesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               stratumn.chainscript.Chainscript.Evidence, stratumn.chainscript.Chainscript.Evidence.Builder, stratumn.chainscript.Chainscript.EvidenceOrBuilder>(
                   evidences_,
-                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
                   isClean());
           evidences_ = null;
         }
         return evidencesBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -1836,11 +1936,12 @@ public final class Chainscript {
 
     private static final com.google.protobuf.Parser<SegmentMeta>
         PARSER = new com.google.protobuf.AbstractParser<SegmentMeta>() {
+      @java.lang.Override
       public SegmentMeta parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new SegmentMeta(input, extensionRegistry);
+        return new SegmentMeta(input, extensionRegistry);
       }
     };
 
@@ -1853,6 +1954,7 @@ public final class Chainscript {
       return PARSER;
     }
 
+    @java.lang.Override
     public stratumn.chainscript.Chainscript.SegmentMeta getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -1952,6 +2054,7 @@ public final class Chainscript {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:stratumn.chainscript.Evidence)
       EvidenceOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use Evidence.newBuilder() to construct.
     private Evidence(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -1964,16 +2067,27 @@ public final class Chainscript {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Evidence();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private Evidence(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
-      int mutable_bitField0_ = 0;
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -1982,12 +2096,6 @@ public final class Chainscript {
             case 0:
               done = true;
               break;
-            default: {
-              if (!input.skipField(tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
 
@@ -2011,6 +2119,13 @@ public final class Chainscript {
               proof_ = input.readBytes();
               break;
             }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -2019,6 +2134,7 @@ public final class Chainscript {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -2027,6 +2143,7 @@ public final class Chainscript {
       return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Evidence_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Evidence_fieldAccessorTable
@@ -2185,6 +2302,7 @@ public final class Chainscript {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -2194,6 +2312,7 @@ public final class Chainscript {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!getVersionBytes().isEmpty()) {
@@ -2208,8 +2327,10 @@ public final class Chainscript {
       if (!proof_.isEmpty()) {
         output.writeBytes(20, proof_);
       }
+      unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -2228,11 +2349,11 @@ public final class Chainscript {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(20, proof_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -2243,16 +2364,16 @@ public final class Chainscript {
       }
       stratumn.chainscript.Chainscript.Evidence other = (stratumn.chainscript.Chainscript.Evidence) obj;
 
-      boolean result = true;
-      result = result && getVersion()
-          .equals(other.getVersion());
-      result = result && getBackend()
-          .equals(other.getBackend());
-      result = result && getProvider()
-          .equals(other.getProvider());
-      result = result && getProof()
-          .equals(other.getProof());
-      return result;
+      if (!getVersion()
+          .equals(other.getVersion())) return false;
+      if (!getBackend()
+          .equals(other.getBackend())) return false;
+      if (!getProvider()
+          .equals(other.getProvider())) return false;
+      if (!getProof()
+          .equals(other.getProof())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -2275,6 +2396,17 @@ public final class Chainscript {
       return hash;
     }
 
+    public static stratumn.chainscript.Chainscript.Evidence parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static stratumn.chainscript.Chainscript.Evidence parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static stratumn.chainscript.Chainscript.Evidence parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -2334,6 +2466,7 @@ public final class Chainscript {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -2341,6 +2474,7 @@ public final class Chainscript {
     public static Builder newBuilder(stratumn.chainscript.Chainscript.Evidence prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -2372,6 +2506,7 @@ public final class Chainscript {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Evidence_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Evidence_fieldAccessorTable
@@ -2394,6 +2529,7 @@ public final class Chainscript {
                 .alwaysUseFieldBuilders) {
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         version_ = "";
@@ -2407,15 +2543,18 @@ public final class Chainscript {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Evidence_descriptor;
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.Evidence getDefaultInstanceForType() {
         return stratumn.chainscript.Chainscript.Evidence.getDefaultInstance();
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.Evidence build() {
         stratumn.chainscript.Chainscript.Evidence result = buildPartial();
         if (!result.isInitialized()) {
@@ -2424,6 +2563,7 @@ public final class Chainscript {
         return result;
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.Evidence buildPartial() {
         stratumn.chainscript.Chainscript.Evidence result = new stratumn.chainscript.Chainscript.Evidence(this);
         result.version_ = version_;
@@ -2434,32 +2574,39 @@ public final class Chainscript {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return (Builder) super.setField(field, value);
+          java.lang.Object value) {
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof stratumn.chainscript.Chainscript.Evidence) {
           return mergeFrom((stratumn.chainscript.Chainscript.Evidence)other);
@@ -2486,14 +2633,17 @@ public final class Chainscript {
         if (other.getProof() != com.google.protobuf.ByteString.EMPTY) {
           setProof(other.getProof());
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2848,14 +2998,16 @@ public final class Chainscript {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -2874,11 +3026,12 @@ public final class Chainscript {
 
     private static final com.google.protobuf.Parser<Evidence>
         PARSER = new com.google.protobuf.AbstractParser<Evidence>() {
+      @java.lang.Override
       public Evidence parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Evidence(input, extensionRegistry);
+        return new Evidence(input, extensionRegistry);
       }
     };
 
@@ -2891,6 +3044,7 @@ public final class Chainscript {
       return PARSER;
     }
 
+    @java.lang.Override
     public stratumn.chainscript.Chainscript.Evidence getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -3019,6 +3173,7 @@ public final class Chainscript {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:stratumn.chainscript.Link)
       LinkOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use Link.newBuilder() to construct.
     private Link(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -3030,16 +3185,28 @@ public final class Chainscript {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Link();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private Link(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -3048,12 +3215,6 @@ public final class Chainscript {
             case 0:
               done = true;
               break;
-            default: {
-              if (!input.skipField(tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
 
@@ -3079,12 +3240,19 @@ public final class Chainscript {
               break;
             }
             case 162: {
-              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
                 signatures_ = new java.util.ArrayList<stratumn.chainscript.Chainscript.Signature>();
-                mutable_bitField0_ |= 0x00000008;
+                mutable_bitField0_ |= 0x00000001;
               }
               signatures_.add(
                   input.readMessage(stratumn.chainscript.Chainscript.Signature.parser(), extensionRegistry));
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
               break;
             }
           }
@@ -3095,9 +3263,10 @@ public final class Chainscript {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
           signatures_ = java.util.Collections.unmodifiableList(signatures_);
         }
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -3106,6 +3275,7 @@ public final class Chainscript {
       return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Link_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Link_fieldAccessorTable
@@ -3113,7 +3283,6 @@ public final class Chainscript {
               stratumn.chainscript.Chainscript.Link.class, stratumn.chainscript.Chainscript.Link.Builder.class);
     }
 
-    private int bitField0_;
     public static final int VERSION_FIELD_NUMBER = 1;
     private volatile java.lang.Object version_;
     /**
@@ -3268,6 +3437,7 @@ public final class Chainscript {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -3277,6 +3447,7 @@ public final class Chainscript {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!getVersionBytes().isEmpty()) {
@@ -3291,8 +3462,10 @@ public final class Chainscript {
       for (int i = 0; i < signatures_.size(); i++) {
         output.writeMessage(20, signatures_.get(i));
       }
+      unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -3313,11 +3486,11 @@ public final class Chainscript {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(20, signatures_.get(i));
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -3328,19 +3501,19 @@ public final class Chainscript {
       }
       stratumn.chainscript.Chainscript.Link other = (stratumn.chainscript.Chainscript.Link) obj;
 
-      boolean result = true;
-      result = result && getVersion()
-          .equals(other.getVersion());
-      result = result && getData()
-          .equals(other.getData());
-      result = result && (hasMeta() == other.hasMeta());
+      if (!getVersion()
+          .equals(other.getVersion())) return false;
+      if (!getData()
+          .equals(other.getData())) return false;
+      if (hasMeta() != other.hasMeta()) return false;
       if (hasMeta()) {
-        result = result && getMeta()
-            .equals(other.getMeta());
+        if (!getMeta()
+            .equals(other.getMeta())) return false;
       }
-      result = result && getSignaturesList()
-          .equals(other.getSignaturesList());
-      return result;
+      if (!getSignaturesList()
+          .equals(other.getSignaturesList())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -3367,6 +3540,17 @@ public final class Chainscript {
       return hash;
     }
 
+    public static stratumn.chainscript.Chainscript.Link parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static stratumn.chainscript.Chainscript.Link parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static stratumn.chainscript.Chainscript.Link parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3426,6 +3610,7 @@ public final class Chainscript {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -3433,6 +3618,7 @@ public final class Chainscript {
     public static Builder newBuilder(stratumn.chainscript.Chainscript.Link prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -3461,6 +3647,7 @@ public final class Chainscript {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Link_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Link_fieldAccessorTable
@@ -3484,6 +3671,7 @@ public final class Chainscript {
           getSignaturesFieldBuilder();
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         version_ = "";
@@ -3498,22 +3686,25 @@ public final class Chainscript {
         }
         if (signaturesBuilder_ == null) {
           signatures_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000001);
         } else {
           signaturesBuilder_.clear();
         }
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Link_descriptor;
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.Link getDefaultInstanceForType() {
         return stratumn.chainscript.Chainscript.Link.getDefaultInstance();
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.Link build() {
         stratumn.chainscript.Chainscript.Link result = buildPartial();
         if (!result.isInitialized()) {
@@ -3522,10 +3713,10 @@ public final class Chainscript {
         return result;
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.Link buildPartial() {
         stratumn.chainscript.Chainscript.Link result = new stratumn.chainscript.Chainscript.Link(this);
         int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
         result.version_ = version_;
         result.data_ = data_;
         if (metaBuilder_ == null) {
@@ -3534,45 +3725,51 @@ public final class Chainscript {
           result.meta_ = metaBuilder_.build();
         }
         if (signaturesBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          if (((bitField0_ & 0x00000001) != 0)) {
             signatures_ = java.util.Collections.unmodifiableList(signatures_);
-            bitField0_ = (bitField0_ & ~0x00000008);
+            bitField0_ = (bitField0_ & ~0x00000001);
           }
           result.signatures_ = signatures_;
         } else {
           result.signatures_ = signaturesBuilder_.build();
         }
-        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return (Builder) super.setField(field, value);
+          java.lang.Object value) {
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof stratumn.chainscript.Chainscript.Link) {
           return mergeFrom((stratumn.chainscript.Chainscript.Link)other);
@@ -3598,7 +3795,7 @@ public final class Chainscript {
           if (!other.signatures_.isEmpty()) {
             if (signatures_.isEmpty()) {
               signatures_ = other.signatures_;
-              bitField0_ = (bitField0_ & ~0x00000008);
+              bitField0_ = (bitField0_ & ~0x00000001);
             } else {
               ensureSignaturesIsMutable();
               signatures_.addAll(other.signatures_);
@@ -3611,7 +3808,7 @@ public final class Chainscript {
               signaturesBuilder_.dispose();
               signaturesBuilder_ = null;
               signatures_ = other.signatures_;
-              bitField0_ = (bitField0_ & ~0x00000008);
+              bitField0_ = (bitField0_ & ~0x00000001);
               signaturesBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                    getSignaturesFieldBuilder() : null;
@@ -3620,14 +3817,17 @@ public final class Chainscript {
             }
           }
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3788,7 +3988,7 @@ public final class Chainscript {
         return this;
       }
 
-      private stratumn.chainscript.Chainscript.LinkMeta meta_ = null;
+      private stratumn.chainscript.Chainscript.LinkMeta meta_;
       private com.google.protobuf.SingleFieldBuilderV3<
           stratumn.chainscript.Chainscript.LinkMeta, stratumn.chainscript.Chainscript.LinkMeta.Builder, stratumn.chainscript.Chainscript.LinkMetaOrBuilder> metaBuilder_;
       /**
@@ -3962,9 +4162,9 @@ public final class Chainscript {
       private java.util.List<stratumn.chainscript.Chainscript.Signature> signatures_ =
         java.util.Collections.emptyList();
       private void ensureSignaturesIsMutable() {
-        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           signatures_ = new java.util.ArrayList<stratumn.chainscript.Chainscript.Signature>(signatures_);
-          bitField0_ |= 0x00000008;
+          bitField0_ |= 0x00000001;
          }
       }
 
@@ -4158,7 +4358,7 @@ public final class Chainscript {
       public Builder clearSignatures() {
         if (signaturesBuilder_ == null) {
           signatures_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000001);
           onChanged();
         } else {
           signaturesBuilder_.clear();
@@ -4263,21 +4463,23 @@ public final class Chainscript {
           signaturesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               stratumn.chainscript.Chainscript.Signature, stratumn.chainscript.Chainscript.Signature.Builder, stratumn.chainscript.Chainscript.SignatureOrBuilder>(
                   signatures_,
-                  ((bitField0_ & 0x00000008) == 0x00000008),
+                  ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
                   isClean());
           signatures_ = null;
         }
         return signaturesBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -4296,11 +4498,12 @@ public final class Chainscript {
 
     private static final com.google.protobuf.Parser<Link>
         PARSER = new com.google.protobuf.AbstractParser<Link>() {
+      @java.lang.Override
       public Link parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Link(input, extensionRegistry);
+        return new Link(input, extensionRegistry);
       }
     };
 
@@ -4313,6 +4516,7 @@ public final class Chainscript {
       return PARSER;
     }
 
+    @java.lang.Override
     public stratumn.chainscript.Chainscript.Link getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -4371,6 +4575,7 @@ public final class Chainscript {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:stratumn.chainscript.Process)
       ProcessOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use Process.newBuilder() to construct.
     private Process(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -4381,16 +4586,27 @@ public final class Chainscript {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Process();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private Process(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
-      int mutable_bitField0_ = 0;
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -4399,12 +4615,6 @@ public final class Chainscript {
             case 0:
               done = true;
               break;
-            default: {
-              if (!input.skipField(tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
 
@@ -4417,6 +4627,13 @@ public final class Chainscript {
               state_ = s;
               break;
             }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -4425,6 +4642,7 @@ public final class Chainscript {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -4433,6 +4651,7 @@ public final class Chainscript {
       return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Process_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Process_fieldAccessorTable
@@ -4525,6 +4744,7 @@ public final class Chainscript {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -4534,6 +4754,7 @@ public final class Chainscript {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!getNameBytes().isEmpty()) {
@@ -4542,8 +4763,10 @@ public final class Chainscript {
       if (!getStateBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 10, state_);
       }
+      unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -4555,11 +4778,11 @@ public final class Chainscript {
       if (!getStateBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(10, state_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -4570,12 +4793,12 @@ public final class Chainscript {
       }
       stratumn.chainscript.Chainscript.Process other = (stratumn.chainscript.Chainscript.Process) obj;
 
-      boolean result = true;
-      result = result && getName()
-          .equals(other.getName());
-      result = result && getState()
-          .equals(other.getState());
-      return result;
+      if (!getName()
+          .equals(other.getName())) return false;
+      if (!getState()
+          .equals(other.getState())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -4594,6 +4817,17 @@ public final class Chainscript {
       return hash;
     }
 
+    public static stratumn.chainscript.Chainscript.Process parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static stratumn.chainscript.Chainscript.Process parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static stratumn.chainscript.Chainscript.Process parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -4653,6 +4887,7 @@ public final class Chainscript {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -4660,6 +4895,7 @@ public final class Chainscript {
     public static Builder newBuilder(stratumn.chainscript.Chainscript.Process prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -4688,6 +4924,7 @@ public final class Chainscript {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Process_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Process_fieldAccessorTable
@@ -4710,6 +4947,7 @@ public final class Chainscript {
                 .alwaysUseFieldBuilders) {
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         name_ = "";
@@ -4719,15 +4957,18 @@ public final class Chainscript {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Process_descriptor;
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.Process getDefaultInstanceForType() {
         return stratumn.chainscript.Chainscript.Process.getDefaultInstance();
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.Process build() {
         stratumn.chainscript.Chainscript.Process result = buildPartial();
         if (!result.isInitialized()) {
@@ -4736,6 +4977,7 @@ public final class Chainscript {
         return result;
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.Process buildPartial() {
         stratumn.chainscript.Chainscript.Process result = new stratumn.chainscript.Chainscript.Process(this);
         result.name_ = name_;
@@ -4744,32 +4986,39 @@ public final class Chainscript {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return (Builder) super.setField(field, value);
+          java.lang.Object value) {
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof stratumn.chainscript.Chainscript.Process) {
           return mergeFrom((stratumn.chainscript.Chainscript.Process)other);
@@ -4789,14 +5038,17 @@ public final class Chainscript {
           state_ = other.state_;
           onChanged();
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -4992,14 +5244,16 @@ public final class Chainscript {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -5018,11 +5272,12 @@ public final class Chainscript {
 
     private static final com.google.protobuf.Parser<Process>
         PARSER = new com.google.protobuf.AbstractParser<Process>() {
+      @java.lang.Override
       public Process parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Process(input, extensionRegistry);
+        return new Process(input, extensionRegistry);
       }
     };
 
@@ -5035,6 +5290,7 @@ public final class Chainscript {
       return PARSER;
     }
 
+    @java.lang.Override
     public stratumn.chainscript.Chainscript.Process getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -5288,6 +5544,7 @@ public final class Chainscript {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:stratumn.chainscript.LinkMeta)
       LinkMetaOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use LinkMeta.newBuilder() to construct.
     private LinkMeta(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -5295,9 +5552,7 @@ public final class Chainscript {
     private LinkMeta() {
       clientId_ = "";
       prevLinkHash_ = com.google.protobuf.ByteString.EMPTY;
-      priority_ = 0D;
       refs_ = java.util.Collections.emptyList();
-      outDegree_ = 0;
       mapId_ = "";
       action_ = "";
       step_ = "";
@@ -5306,16 +5561,28 @@ public final class Chainscript {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new LinkMeta();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private LinkMeta(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -5324,12 +5591,6 @@ public final class Chainscript {
             case 0:
               done = true;
               break;
-            default: {
-              if (!input.skipField(tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
 
@@ -5347,9 +5608,9 @@ public final class Chainscript {
               break;
             }
             case 98: {
-              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
                 refs_ = new java.util.ArrayList<stratumn.chainscript.Chainscript.LinkReference>();
-                mutable_bitField0_ |= 0x00000008;
+                mutable_bitField0_ |= 0x00000001;
               }
               refs_.add(
                   input.readMessage(stratumn.chainscript.Chainscript.LinkReference.parser(), extensionRegistry));
@@ -5393,9 +5654,9 @@ public final class Chainscript {
             }
             case 258: {
               java.lang.String s = input.readStringRequireUtf8();
-              if (!((mutable_bitField0_ & 0x00000200) == 0x00000200)) {
+              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
                 tags_ = new com.google.protobuf.LazyStringArrayList();
-                mutable_bitField0_ |= 0x00000200;
+                mutable_bitField0_ |= 0x00000002;
               }
               tags_.add(s);
               break;
@@ -5403,6 +5664,13 @@ public final class Chainscript {
             case 802: {
 
               data_ = input.readBytes();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
               break;
             }
           }
@@ -5413,12 +5681,13 @@ public final class Chainscript {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
           refs_ = java.util.Collections.unmodifiableList(refs_);
         }
-        if (((mutable_bitField0_ & 0x00000200) == 0x00000200)) {
+        if (((mutable_bitField0_ & 0x00000002) != 0)) {
           tags_ = tags_.getUnmodifiableView();
         }
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -5427,6 +5696,7 @@ public final class Chainscript {
       return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_LinkMeta_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_LinkMeta_fieldAccessorTable
@@ -5434,7 +5704,6 @@ public final class Chainscript {
               stratumn.chainscript.Chainscript.LinkMeta.class, stratumn.chainscript.Chainscript.LinkMeta.Builder.class);
     }
 
-    private int bitField0_;
     public static final int CLIENT_ID_FIELD_NUMBER = 1;
     private volatile java.lang.Object clientId_;
     /**
@@ -5808,6 +6077,7 @@ public final class Chainscript {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -5817,6 +6087,7 @@ public final class Chainscript {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!getClientIdBytes().isEmpty()) {
@@ -5852,8 +6123,10 @@ public final class Chainscript {
       if (!data_.isEmpty()) {
         output.writeBytes(100, data_);
       }
+      unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -5903,11 +6176,11 @@ public final class Chainscript {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(100, data_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -5918,35 +6191,34 @@ public final class Chainscript {
       }
       stratumn.chainscript.Chainscript.LinkMeta other = (stratumn.chainscript.Chainscript.LinkMeta) obj;
 
-      boolean result = true;
-      result = result && getClientId()
-          .equals(other.getClientId());
-      result = result && getPrevLinkHash()
-          .equals(other.getPrevLinkHash());
-      result = result && (
-          java.lang.Double.doubleToLongBits(getPriority())
-          == java.lang.Double.doubleToLongBits(
-              other.getPriority()));
-      result = result && getRefsList()
-          .equals(other.getRefsList());
-      result = result && (getOutDegree()
-          == other.getOutDegree());
-      result = result && (hasProcess() == other.hasProcess());
+      if (!getClientId()
+          .equals(other.getClientId())) return false;
+      if (!getPrevLinkHash()
+          .equals(other.getPrevLinkHash())) return false;
+      if (java.lang.Double.doubleToLongBits(getPriority())
+          != java.lang.Double.doubleToLongBits(
+              other.getPriority())) return false;
+      if (!getRefsList()
+          .equals(other.getRefsList())) return false;
+      if (getOutDegree()
+          != other.getOutDegree()) return false;
+      if (hasProcess() != other.hasProcess()) return false;
       if (hasProcess()) {
-        result = result && getProcess()
-            .equals(other.getProcess());
+        if (!getProcess()
+            .equals(other.getProcess())) return false;
       }
-      result = result && getMapId()
-          .equals(other.getMapId());
-      result = result && getAction()
-          .equals(other.getAction());
-      result = result && getStep()
-          .equals(other.getStep());
-      result = result && getTagsList()
-          .equals(other.getTagsList());
-      result = result && getData()
-          .equals(other.getData());
-      return result;
+      if (!getMapId()
+          .equals(other.getMapId())) return false;
+      if (!getAction()
+          .equals(other.getAction())) return false;
+      if (!getStep()
+          .equals(other.getStep())) return false;
+      if (!getTagsList()
+          .equals(other.getTagsList())) return false;
+      if (!getData()
+          .equals(other.getData())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -5990,6 +6262,17 @@ public final class Chainscript {
       return hash;
     }
 
+    public static stratumn.chainscript.Chainscript.LinkMeta parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static stratumn.chainscript.Chainscript.LinkMeta parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static stratumn.chainscript.Chainscript.LinkMeta parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -6049,6 +6332,7 @@ public final class Chainscript {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -6056,6 +6340,7 @@ public final class Chainscript {
     public static Builder newBuilder(stratumn.chainscript.Chainscript.LinkMeta prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -6084,6 +6369,7 @@ public final class Chainscript {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_LinkMeta_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_LinkMeta_fieldAccessorTable
@@ -6107,6 +6393,7 @@ public final class Chainscript {
           getRefsFieldBuilder();
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         clientId_ = "";
@@ -6117,7 +6404,7 @@ public final class Chainscript {
 
         if (refsBuilder_ == null) {
           refs_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000001);
         } else {
           refsBuilder_.clear();
         }
@@ -6136,21 +6423,24 @@ public final class Chainscript {
         step_ = "";
 
         tags_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000200);
+        bitField0_ = (bitField0_ & ~0x00000002);
         data_ = com.google.protobuf.ByteString.EMPTY;
 
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_LinkMeta_descriptor;
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.LinkMeta getDefaultInstanceForType() {
         return stratumn.chainscript.Chainscript.LinkMeta.getDefaultInstance();
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.LinkMeta build() {
         stratumn.chainscript.Chainscript.LinkMeta result = buildPartial();
         if (!result.isInitialized()) {
@@ -6159,17 +6449,17 @@ public final class Chainscript {
         return result;
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.LinkMeta buildPartial() {
         stratumn.chainscript.Chainscript.LinkMeta result = new stratumn.chainscript.Chainscript.LinkMeta(this);
         int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
         result.clientId_ = clientId_;
         result.prevLinkHash_ = prevLinkHash_;
         result.priority_ = priority_;
         if (refsBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          if (((bitField0_ & 0x00000001) != 0)) {
             refs_ = java.util.Collections.unmodifiableList(refs_);
-            bitField0_ = (bitField0_ & ~0x00000008);
+            bitField0_ = (bitField0_ & ~0x00000001);
           }
           result.refs_ = refs_;
         } else {
@@ -6184,43 +6474,49 @@ public final class Chainscript {
         result.mapId_ = mapId_;
         result.action_ = action_;
         result.step_ = step_;
-        if (((bitField0_ & 0x00000200) == 0x00000200)) {
+        if (((bitField0_ & 0x00000002) != 0)) {
           tags_ = tags_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000200);
+          bitField0_ = (bitField0_ & ~0x00000002);
         }
         result.tags_ = tags_;
         result.data_ = data_;
-        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return (Builder) super.setField(field, value);
+          java.lang.Object value) {
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof stratumn.chainscript.Chainscript.LinkMeta) {
           return mergeFrom((stratumn.chainscript.Chainscript.LinkMeta)other);
@@ -6246,7 +6542,7 @@ public final class Chainscript {
           if (!other.refs_.isEmpty()) {
             if (refs_.isEmpty()) {
               refs_ = other.refs_;
-              bitField0_ = (bitField0_ & ~0x00000008);
+              bitField0_ = (bitField0_ & ~0x00000001);
             } else {
               ensureRefsIsMutable();
               refs_.addAll(other.refs_);
@@ -6259,7 +6555,7 @@ public final class Chainscript {
               refsBuilder_.dispose();
               refsBuilder_ = null;
               refs_ = other.refs_;
-              bitField0_ = (bitField0_ & ~0x00000008);
+              bitField0_ = (bitField0_ & ~0x00000001);
               refsBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                    getRefsFieldBuilder() : null;
@@ -6289,7 +6585,7 @@ public final class Chainscript {
         if (!other.tags_.isEmpty()) {
           if (tags_.isEmpty()) {
             tags_ = other.tags_;
-            bitField0_ = (bitField0_ & ~0x00000200);
+            bitField0_ = (bitField0_ & ~0x00000002);
           } else {
             ensureTagsIsMutable();
             tags_.addAll(other.tags_);
@@ -6299,14 +6595,17 @@ public final class Chainscript {
         if (other.getData() != com.google.protobuf.ByteString.EMPTY) {
           setData(other.getData());
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -6510,9 +6809,9 @@ public final class Chainscript {
       private java.util.List<stratumn.chainscript.Chainscript.LinkReference> refs_ =
         java.util.Collections.emptyList();
       private void ensureRefsIsMutable() {
-        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           refs_ = new java.util.ArrayList<stratumn.chainscript.Chainscript.LinkReference>(refs_);
-          bitField0_ |= 0x00000008;
+          bitField0_ |= 0x00000001;
          }
       }
 
@@ -6706,7 +7005,7 @@ public final class Chainscript {
       public Builder clearRefs() {
         if (refsBuilder_ == null) {
           refs_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000001);
           onChanged();
         } else {
           refsBuilder_.clear();
@@ -6811,7 +7110,7 @@ public final class Chainscript {
           refsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               stratumn.chainscript.Chainscript.LinkReference, stratumn.chainscript.Chainscript.LinkReference.Builder, stratumn.chainscript.Chainscript.LinkReferenceOrBuilder>(
                   refs_,
-                  ((bitField0_ & 0x00000008) == 0x00000008),
+                  ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
                   isClean());
           refs_ = null;
@@ -6875,7 +7174,7 @@ public final class Chainscript {
         return this;
       }
 
-      private stratumn.chainscript.Chainscript.Process process_ = null;
+      private stratumn.chainscript.Chainscript.Process process_;
       private com.google.protobuf.SingleFieldBuilderV3<
           stratumn.chainscript.Chainscript.Process, stratumn.chainscript.Chainscript.Process.Builder, stratumn.chainscript.Chainscript.ProcessOrBuilder> processBuilder_;
       /**
@@ -7312,9 +7611,9 @@ public final class Chainscript {
 
       private com.google.protobuf.LazyStringList tags_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureTagsIsMutable() {
-        if (!((bitField0_ & 0x00000200) == 0x00000200)) {
+        if (!((bitField0_ & 0x00000002) != 0)) {
           tags_ = new com.google.protobuf.LazyStringArrayList(tags_);
-          bitField0_ |= 0x00000200;
+          bitField0_ |= 0x00000002;
          }
       }
       /**
@@ -7417,7 +7716,7 @@ public final class Chainscript {
        */
       public Builder clearTags() {
         tags_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000200);
+        bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
         return this;
       }
@@ -7486,14 +7785,16 @@ public final class Chainscript {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -7512,11 +7813,12 @@ public final class Chainscript {
 
     private static final com.google.protobuf.Parser<LinkMeta>
         PARSER = new com.google.protobuf.AbstractParser<LinkMeta>() {
+      @java.lang.Override
       public LinkMeta parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new LinkMeta(input, extensionRegistry);
+        return new LinkMeta(input, extensionRegistry);
       }
     };
 
@@ -7529,6 +7831,7 @@ public final class Chainscript {
       return PARSER;
     }
 
+    @java.lang.Override
     public stratumn.chainscript.Chainscript.LinkMeta getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -7577,6 +7880,7 @@ public final class Chainscript {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:stratumn.chainscript.LinkReference)
       LinkReferenceOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use LinkReference.newBuilder() to construct.
     private LinkReference(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -7587,16 +7891,27 @@ public final class Chainscript {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new LinkReference();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private LinkReference(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
-      int mutable_bitField0_ = 0;
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -7605,12 +7920,6 @@ public final class Chainscript {
             case 0:
               done = true;
               break;
-            default: {
-              if (!input.skipField(tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
 
               linkHash_ = input.readBytes();
@@ -7622,6 +7931,13 @@ public final class Chainscript {
               process_ = s;
               break;
             }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -7630,6 +7946,7 @@ public final class Chainscript {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -7638,6 +7955,7 @@ public final class Chainscript {
       return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_LinkReference_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_LinkReference_fieldAccessorTable
@@ -7701,6 +8019,7 @@ public final class Chainscript {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -7710,6 +8029,7 @@ public final class Chainscript {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!linkHash_.isEmpty()) {
@@ -7718,8 +8038,10 @@ public final class Chainscript {
       if (!getProcessBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 10, process_);
       }
+      unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -7732,11 +8054,11 @@ public final class Chainscript {
       if (!getProcessBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(10, process_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -7747,12 +8069,12 @@ public final class Chainscript {
       }
       stratumn.chainscript.Chainscript.LinkReference other = (stratumn.chainscript.Chainscript.LinkReference) obj;
 
-      boolean result = true;
-      result = result && getLinkHash()
-          .equals(other.getLinkHash());
-      result = result && getProcess()
-          .equals(other.getProcess());
-      return result;
+      if (!getLinkHash()
+          .equals(other.getLinkHash())) return false;
+      if (!getProcess()
+          .equals(other.getProcess())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -7771,6 +8093,17 @@ public final class Chainscript {
       return hash;
     }
 
+    public static stratumn.chainscript.Chainscript.LinkReference parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static stratumn.chainscript.Chainscript.LinkReference parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static stratumn.chainscript.Chainscript.LinkReference parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -7830,6 +8163,7 @@ public final class Chainscript {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -7837,6 +8171,7 @@ public final class Chainscript {
     public static Builder newBuilder(stratumn.chainscript.Chainscript.LinkReference prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -7864,6 +8199,7 @@ public final class Chainscript {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_LinkReference_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_LinkReference_fieldAccessorTable
@@ -7886,6 +8222,7 @@ public final class Chainscript {
                 .alwaysUseFieldBuilders) {
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         linkHash_ = com.google.protobuf.ByteString.EMPTY;
@@ -7895,15 +8232,18 @@ public final class Chainscript {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_LinkReference_descriptor;
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.LinkReference getDefaultInstanceForType() {
         return stratumn.chainscript.Chainscript.LinkReference.getDefaultInstance();
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.LinkReference build() {
         stratumn.chainscript.Chainscript.LinkReference result = buildPartial();
         if (!result.isInitialized()) {
@@ -7912,6 +8252,7 @@ public final class Chainscript {
         return result;
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.LinkReference buildPartial() {
         stratumn.chainscript.Chainscript.LinkReference result = new stratumn.chainscript.Chainscript.LinkReference(this);
         result.linkHash_ = linkHash_;
@@ -7920,32 +8261,39 @@ public final class Chainscript {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return (Builder) super.setField(field, value);
+          java.lang.Object value) {
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof stratumn.chainscript.Chainscript.LinkReference) {
           return mergeFrom((stratumn.chainscript.Chainscript.LinkReference)other);
@@ -7964,14 +8312,17 @@ public final class Chainscript {
           process_ = other.process_;
           onChanged();
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -8119,14 +8470,16 @@ public final class Chainscript {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -8145,11 +8498,12 @@ public final class Chainscript {
 
     private static final com.google.protobuf.Parser<LinkReference>
         PARSER = new com.google.protobuf.AbstractParser<LinkReference>() {
+      @java.lang.Override
       public LinkReference parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new LinkReference(input, extensionRegistry);
+        return new LinkReference(input, extensionRegistry);
       }
     };
 
@@ -8162,6 +8516,7 @@ public final class Chainscript {
       return PARSER;
     }
 
+    @java.lang.Override
     public stratumn.chainscript.Chainscript.LinkReference getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -8264,6 +8619,7 @@ public final class Chainscript {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:stratumn.chainscript.Signature)
       SignatureOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use Signature.newBuilder() to construct.
     private Signature(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -8277,16 +8633,27 @@ public final class Chainscript {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Signature();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      return this.unknownFields;
     }
     private Signature(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
-      int mutable_bitField0_ = 0;
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -8295,12 +8662,6 @@ public final class Chainscript {
             case 0:
               done = true;
               break;
-            default: {
-              if (!input.skipField(tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
 
@@ -8329,6 +8690,13 @@ public final class Chainscript {
               signature_ = input.readBytes();
               break;
             }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -8337,6 +8705,7 @@ public final class Chainscript {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -8345,6 +8714,7 @@ public final class Chainscript {
       return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Signature_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Signature_fieldAccessorTable
@@ -8511,6 +8881,7 @@ public final class Chainscript {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -8520,6 +8891,7 @@ public final class Chainscript {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!getVersionBytes().isEmpty()) {
@@ -8537,8 +8909,10 @@ public final class Chainscript {
       if (!signature_.isEmpty()) {
         output.writeBytes(21, signature_);
       }
+      unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -8561,11 +8935,11 @@ public final class Chainscript {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(21, signature_);
       }
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -8576,18 +8950,18 @@ public final class Chainscript {
       }
       stratumn.chainscript.Chainscript.Signature other = (stratumn.chainscript.Chainscript.Signature) obj;
 
-      boolean result = true;
-      result = result && getVersion()
-          .equals(other.getVersion());
-      result = result && getType()
-          .equals(other.getType());
-      result = result && getPayloadPath()
-          .equals(other.getPayloadPath());
-      result = result && getPublicKey()
-          .equals(other.getPublicKey());
-      result = result && getSignature()
-          .equals(other.getSignature());
-      return result;
+      if (!getVersion()
+          .equals(other.getVersion())) return false;
+      if (!getType()
+          .equals(other.getType())) return false;
+      if (!getPayloadPath()
+          .equals(other.getPayloadPath())) return false;
+      if (!getPublicKey()
+          .equals(other.getPublicKey())) return false;
+      if (!getSignature()
+          .equals(other.getSignature())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -8612,6 +8986,17 @@ public final class Chainscript {
       return hash;
     }
 
+    public static stratumn.chainscript.Chainscript.Signature parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static stratumn.chainscript.Chainscript.Signature parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static stratumn.chainscript.Chainscript.Signature parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -8671,6 +9056,7 @@ public final class Chainscript {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -8678,6 +9064,7 @@ public final class Chainscript {
     public static Builder newBuilder(stratumn.chainscript.Chainscript.Signature prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -8708,6 +9095,7 @@ public final class Chainscript {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Signature_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Signature_fieldAccessorTable
@@ -8730,6 +9118,7 @@ public final class Chainscript {
                 .alwaysUseFieldBuilders) {
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         version_ = "";
@@ -8745,15 +9134,18 @@ public final class Chainscript {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return stratumn.chainscript.Chainscript.internal_static_stratumn_chainscript_Signature_descriptor;
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.Signature getDefaultInstanceForType() {
         return stratumn.chainscript.Chainscript.Signature.getDefaultInstance();
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.Signature build() {
         stratumn.chainscript.Chainscript.Signature result = buildPartial();
         if (!result.isInitialized()) {
@@ -8762,6 +9154,7 @@ public final class Chainscript {
         return result;
       }
 
+      @java.lang.Override
       public stratumn.chainscript.Chainscript.Signature buildPartial() {
         stratumn.chainscript.Chainscript.Signature result = new stratumn.chainscript.Chainscript.Signature(this);
         result.version_ = version_;
@@ -8773,32 +9166,39 @@ public final class Chainscript {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return (Builder) super.setField(field, value);
+          java.lang.Object value) {
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof stratumn.chainscript.Chainscript.Signature) {
           return mergeFrom((stratumn.chainscript.Chainscript.Signature)other);
@@ -8828,14 +9228,17 @@ public final class Chainscript {
         if (other.getSignature() != com.google.protobuf.ByteString.EMPTY) {
           setSignature(other.getSignature());
         }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -9218,14 +9621,16 @@ public final class Chainscript {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
+        return super.mergeUnknownFields(unknownFields);
       }
 
 
@@ -9244,11 +9649,12 @@ public final class Chainscript {
 
     private static final com.google.protobuf.Parser<Signature>
         PARSER = new com.google.protobuf.AbstractParser<Signature>() {
+      @java.lang.Override
       public Signature parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Signature(input, extensionRegistry);
+        return new Signature(input, extensionRegistry);
       }
     };
 
@@ -9261,6 +9667,7 @@ public final class Chainscript {
       return PARSER;
     }
 
+    @java.lang.Override
     public stratumn.chainscript.Chainscript.Signature getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -9325,7 +9732,7 @@ public final class Chainscript {
       "\022\017\n\007version\030\001 \001(\t\022\017\n\007backend\030\n \001(\t\022\020\n\010pr" +
       "ovider\030\013 \001(\t\022\r\n\005proof\030\024 \001(\014\"\210\001\n\004Link\022\017\n\007" +
       "version\030\001 \001(\t\022\014\n\004data\030\n \001(\014\022,\n\004meta\030\013 \001(" +
-      "\0132\036.stratumn.chainscript.LinkMeta\0223\n\nsig",
+      "\0132\036.stratumn.chainscript.LinkMeta\0223\n\nsig" +
       "natures\030\024 \003(\0132\037.stratumn.chainscript.Sig" +
       "nature\"&\n\007Process\022\014\n\004name\030\001 \001(\t\022\r\n\005state" +
       "\030\n \001(\t\"\210\002\n\010LinkMeta\022\021\n\tclient_id\030\001 \001(\t\022\026" +
@@ -9335,24 +9742,17 @@ public final class Chainscript {
       "ss\030\024 \001(\0132\035.stratumn.chainscript.Process\022" +
       "\016\n\006map_id\030\025 \001(\t\022\016\n\006action\030\036 \001(\t\022\014\n\004step\030" +
       "\037 \001(\t\022\014\n\004tags\030  \003(\t\022\014\n\004data\030d \001(\014\"3\n\rLin" +
-      "kReference\022\021\n\tlink_hash\030\001 \001(\014\022\017\n\007process",
+      "kReference\022\021\n\tlink_hash\030\001 \001(\014\022\017\n\007process" +
       "\030\n \001(\t\"g\n\tSignature\022\017\n\007version\030\001 \001(\t\022\014\n\004" +
       "type\030\002 \001(\t\022\024\n\014payload_path\030\n \001(\t\022\022\n\npubl" +
-      "ic_key\030\024 \001(\014\022\021\n\tsignature\030\025 \001(\014B\rZ\013chain" +
-      "scriptb\006proto3"
+      "ic_key\030\024 \001(\014\022\021\n\tsignature\030\025 \001(\014B0\n\024strat" +
+      "umn.chainscriptB\013ChainscriptZ\013chainscrip" +
+      "tb\006proto3"
     };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
-    com.google.protobuf.Descriptors.FileDescriptor
+    descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        }, assigner);
+        });
     internal_static_stratumn_chainscript_Segment_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_stratumn_chainscript_Segment_fieldAccessorTable = new

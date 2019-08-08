@@ -1,23 +1,11 @@
-# chainscript-java
+# ChainScript-java
 
-ChainScript is an open standard for representing Proof of Process data.
-Proof of Process is a protocol that allows partners to follow the execution of a shared process. Proof of Process provides immutability and auditability of every step in the process.
+To build/test the project and run one of the following.
 
-Learn more https://proofofprocess.org/.
-Project: https://github.com/stratumn/chainscript
-JS Version: https://github.com/stratumn/js-chainscript
-Go Version: https://github.com/stratumn/go-chainscript
+RunTest.cmd Generate [put path for JSON file]
+or 
+RunTest.cmd Validate [put path for JSON file]
 
-Files that we need to convert to Java:
-
-src\const.ts
-src\canonicaljson.d.ts
-src\index.ts
-src\errors.ts
-src\ref.ts
-src\link.ts
-src\crypto.d.ts
-src\evidence.ts
-src\link_builder.ts
-src\segment.ts
-src\signature.ts
+The generated data file  will contain an object of 4 test case ids and their corresponding encoded segment object.
+The validate will read the generated file, deserialize it and check all the data within on all the test cases.  
+  
