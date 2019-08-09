@@ -46,39 +46,41 @@ SET JAVA_EXE="%JAVA_HOME%\bin\java.exe"
 
 @REM    -------- BUILD  -----------
  
-IF NOT exist "target\chainscript\ChainScript.jar" (
+IF  exist "target\chainscript\ChainScript.jar"  goto RUNTEST
 Echo Building classes
-	mvnw.cmd install:install-file -Dfile=lib/CanonicalJson.jar  -DgroupId=com.stratumn -DartifactId=canonicaljson -Dversion=1.0 -Dpackaging=jar
-	mvnw.cmd package 
+	call mvnw.cmd package -DskipTests install:install-file -Dfile=lib/CanonicalJson.jar  -DgroupId=com.stratumn -DartifactId=canonicaljson -Dversion=1.0 -Dpackaging=jar
 Echo Building complete
-)
-
- 
-If  "%1" == "" goto RUN_JUNITS
-If  "%2" =="" goto RUN_JUNITS
+  
 
 @REM ---------- RUN generate / validate   json file test. ---------------
+Echo Test execution phase
+:RUNTEST
+
+Set ACTION=%~1
+Set FILEPATH=%~2 
+
+If "%ACTION%" == "" goto RUN_JUNITS_ONLY
+If "%FILEPATH%" == "" goto RUN_JUNITS_ONLY 
+
 setLocal EnableDelayedExpansion
-set CLASSPATH=" 
-for /R ./lib %%a in (*.jar) do (
+set CLASSPATH=
+for /R  target/chainscript/lib %%a in (*.jar) do (
    set CLASSPATH=!CLASSPATH!;%%a
 )
-set CLASSPATH=!CLASSPATH!"
-echo !CLASSPATH! 
- 
- 
-Echo Executing ChainScript %1 %2
-%JAVA_EXE%  -cp !CLASSPATH!;.\target\chainscript\ChainScript.jar;.\target\test-classes com.stratumn.chainscript.ChainscriptTest %1 %2
+set CLASSPATH="!CLASSPATH!"
+@REM echo !CLASSPATH! 
+  
+Echo Executing ChainScript "%ACTION% %FILEPATH%"
+%JAVA_EXE%  -cp !CLASSPATH!;.\target\chainscript\ChainScript.jar;.\target\test-classes  com.stratumn.chainscript.ChainscriptTest  %ACTION% "%FILEPATH%"
 
 Goto success
-
-Echo Running Junit Tests
-:RUN_JUNITS
+@REM ---------- RUN Unit tests ---------------
+Echo Running Junit Tests Only
+:RUN_JUNITS_ONLY
  
-mvnw.cmd surefire:test
+  call mvnw.cmd surefire:test
 
 Goto success
-
 
 :error
 Echo No test are run.

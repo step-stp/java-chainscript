@@ -46,9 +46,9 @@ class ChainscriptTest
    @Test
    void runTests()
    {
-      String path = "1.0.0_T.json";
+      String path = "./1.0.0_T.json";
       File file = new File(path);
-     
+      
       try
       {
          generate(file); 
@@ -71,11 +71,10 @@ class ChainscriptTest
  
          System.exit(-1);
       }
-      String action = args[0];
-      String path = args[1];
-      
+      String action = args[0].trim();
+      String path = args[1].trim(); 
       File file = new File(path);
-      
+            
       if (action.equalsIgnoreCase("generate"))
          generate(file);
       else
@@ -139,6 +138,11 @@ class ChainscriptTest
     */
    private static void generate(File outputFile) throws Exception
    {
+       System.out.println ("Saving encoded segments to " + outputFile.getAbsolutePath()  ); 
+       if (!outputFile.getParentFile().exists())
+       {  //create directory if doesn't exist.
+          outputFile.getParentFile().mkdirs();
+       }
        List<TestCaseResult> results = new ArrayList<TestCaseResult>();
        for (ITestCase tcase: TestCases)
        {
@@ -152,7 +156,7 @@ class ChainscriptTest
          }
        }
        
-       System.out.println ("Saving encoded segments to " + outputFile.getAbsolutePath()  );
+       
        String resultStr = (new GsonBuilder().setPrettyPrinting().create()).toJson(results);
        Files.write(outputFile.toPath(), resultStr.getBytes() );
    }
