@@ -117,9 +117,7 @@ public class Link
       switch(this.version())
       {
          case Constants.LINK_VERSION_1_0_0:
-            //byteArray->base64 String --> UTF8 String
-            //            byte[] decodedData =  Base64.getDecoder().decode(this.link.getData().toByteArray());
-            return CanonicalJson.parse(this.link.getData().toStringUtf8()); //new String(decodedData));
+           return  CanonicalJson.parse(this.link.getData().toStringUtf8()); 
          default:
             throw new ChainscriptException(Error.LinkVersionUnknown);
       }
@@ -173,10 +171,7 @@ public class Link
       {
          case Constants.LINK_VERSION_1_0_0:
             return CanonicalJson.parse(linkMetadata.toStringUtf8());
-         //            
-         //            byte[] decodedData = Base64.getDecoder().decode(linkMetadata.toByteArray());
-         //            result = CanonicalJson.parse(new String(decodedData));
-         //            return result;
+ 
          default:
             throw new ChainscriptException(Error.LinkVersionUnknown);
       }
@@ -277,7 +272,6 @@ public class Link
    public byte[] serialize()
    {
       return this.link.toByteArray(); 
-         // TODO Clean comment stratumn.chainscript.Chainscript.Link.newBuilder(this.link).build().toByteArray();
    }
 
    /**
@@ -295,8 +289,7 @@ public class Link
          case Constants.LINK_VERSION_1_0_0:
             try {
             String canonicalData = CanonicalJson.stringify(data);
-            //            byte[] encodedData =  Base64.getEncoder().encode(canonicalData.getBytes());
-            this.link = this.link.toBuilder().setData(ByteString.copyFrom(canonicalData, "UTF-8") //copyFrom(  encodedData)
+             this.link = this.link.toBuilder().setData(ByteString.copyFrom(canonicalData, "UTF-8") 
             ).build();
             return;
             }
@@ -325,9 +318,7 @@ public class Link
             try
             {
                String canonicalData = CanonicalJson.stringify(data);
-               //TODO remove comment
-               //            byte[] encodedData = Base64.getEncoder().encode(canonicalData.getBytes());
-               stratumn.chainscript.Chainscript.LinkMeta meta = getLinkMeta().toBuilder().setData(ByteString.copyFrom(canonicalData, "UTF-8") //ByteString.copyFrom(encodedData)
+               stratumn.chainscript.Chainscript.LinkMeta meta = getLinkMeta().toBuilder().setData(ByteString.copyFrom(canonicalData, "UTF-8") 
                ).build();
                this.link = this.link.toBuilder().setMeta(meta).build();
                return;

@@ -219,8 +219,7 @@ public class Segment
     */
    public static Segment deserialize(byte[] segmentBytes) throws Exception
    {
-      // TODO Original code, not sure if we need to decode the original bytes array
-      //      const segment = stratumn.chainscript.Segment.decode(segmentBytes);
+     
       stratumn.chainscript.Chainscript.Segment segment = stratumn.chainscript.Chainscript.Segment.parseFrom(segmentBytes);
       return new Segment(segment);
    }

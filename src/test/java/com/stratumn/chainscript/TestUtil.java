@@ -73,8 +73,7 @@ public class TestUtil
       .collect(Collectors.toMap(e -> e.getKey(), 
         e -> e.getValue().getClass().isArray()? 
            Arrays.equals((byte[]) e.getValue(), (byte[]) second.get(e.getKey())) 
-           : e.getValue().equals(second.get(e.getKey()))));
-      // System.out.println(com.toString()); //display comparision output
+           : e.getValue().equals(second.get(e.getKey())))); 
       return first.entrySet().stream()
          .allMatch(e ->  e.getValue().getClass().isArray()? 
             Arrays.equals((byte[]) e.getValue(), (byte[]) second.get(e.getKey())) :   

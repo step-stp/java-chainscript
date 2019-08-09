@@ -5,7 +5,7 @@ Class-Path: lib/protobuf-java-3.9.0.jar lib/protobuf-java-util-3.9.0.j
  -qual-2.5.2.jar lib/j2objc-annotations-1.1.jar lib/animal-sniffer-ann
  otations-1.14.jar lib/error_prone_annotations-2.3.2.jar lib/gson-2.7.
  jar lib/commons-lang3-3.7.jar lib/jmespath-gson-0.3.0.jar lib/jmespat
- h-core-0.3.0.jar lib/eddsa-0.3.0.jar .
+ h-core-0.3.0.jar lib/canonicaljson-1.0.jar lib/eddsa-0.3.0.jar .
 Build-Jdk: 1.8.0_131
 Created-By: Maven Integration for Eclipse
 Main-Class: com.stratumn.chainscript

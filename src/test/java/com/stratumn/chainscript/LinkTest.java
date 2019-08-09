@@ -83,35 +83,7 @@ class LinkTest
          assertEquals(32, h1.length);
       
    }
-
-   //   @Test
-   //   void testLinkHash()
-   //   {
-   //   
-   //   
-   //      Link link = new LinkBuilder("p", "m")
-   //        .withAction("init")
-   //        .withData("b4tm4n")
-   //        .build();
-   //
-   //      const keyBytes = new sig.SigningPrivateKey({
-   //        algo: sig.SIGNING_ALGO_ED25519.name
-   //      }).export();
-   //
-   //      link.sign(keyBytes, "");
-   //      link.sign(keyBytes, "[version,data]");
-   //
-   //      const serialized = link.serialize();
-   //      const link2 = deserialize(serialized);
-   //      link2.validate();
-   //
-   //      expect(link2.hash()).toEqual(link.hash());
-   //
-   //      expect(link2.signatures()).toHaveLength(2);
-   //      link2.signatures()[0].validate(link);
-   //      link2.signatures()[1].validate(link);
-   //}
-
+ 
    
    
    @Test

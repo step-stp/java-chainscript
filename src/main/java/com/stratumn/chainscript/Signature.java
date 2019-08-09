@@ -125,7 +125,7 @@ public class Signature
       {
          case Constants.SIGNATURE_VERSION_1_0_0:
             byte[] signed = link.signedBytes(this.version(), this.payloadPath());
-             //byte[] -> base64 string  
+           
             String publicKeyString  =   Base64.getEncoder().encodeToString(  this.publicKey() )  ;
                 
             try {

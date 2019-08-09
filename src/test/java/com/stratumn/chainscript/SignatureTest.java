@@ -68,13 +68,11 @@ class SignatureTest
       generator.initialize(edDsaSpec , new SecureRandom());
       
       KeyPair pair = (generator).generateKeyPair(); 
-//      String keyEncoded = Base64.getEncoder().encodeToString(pair.getPrivate().getEncoded()); 
-//      Exception e = 
+ 
          assertThrows(Exception.class, ()->{
       CryptoUtils.sign( CryptoUtils.decodeEd25519PrivateKey(sk) 
          ,   new byte[] {42, 24, 24, 42} );
-      }); 
-//       e.printStackTrace(); 
+      });  
       String signed= CryptoUtils.sign(  (EdDSAPrivateKey) pair.getPrivate() ,  msg.getBytes()); 
       
       assertTrue(CryptoUtils.verify((EdDSAPublicKey)pair.getPublic(), msg.getBytes(), signed));

@@ -180,12 +180,6 @@ class SegmentTest
       assertEquals(Error.LinkMissing.toString(), thrown.getMessage());
    }
 
-   //
-   //  it("rejects missing link", () => {
-   //    expect(() => new Segment(new stratumn.chainscript.Segment())).toThrowError(
-   //      errors.ErrLinkMissing
-   //    );
-   //  });
-   //   
+   
 
 }
