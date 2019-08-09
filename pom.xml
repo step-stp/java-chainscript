@@ -41,8 +41,8 @@
 			<groupId>com.stratumn</groupId>
 			<artifactId>canonicaljson</artifactId>
 			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/CanonicalJson.jar</systemPath>
+<!-- 			<scope>system</scope> -->
+<!-- 			<systemPath>${basedir}/lib/CanonicalJson.jar</systemPath> -->
 		</dependency>
      <!-- https://mvnrepository.com/artifact/net.i2p.crypto/eddsa -->
 		<dependency>

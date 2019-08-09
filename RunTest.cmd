@@ -42,15 +42,22 @@ goto error
 
 @REM ==== END VALIDATION ====
   
- SET JAVA_EXE="%JAVA_HOME%\bin\java.exe"
+SET JAVA_EXE="%JAVA_HOME%\bin\java.exe"
 
+@REM    -------- BUILD  -----------
+ 
 IF NOT exist "target\chainscript\ChainScript.jar" (
 Echo Building classes
-	 mvnw.cmd  package
+	mvnw.cmd install:install-file -Dfile=lib/CanonicalJson.jar  -DgroupId=com.stratumn -DartifactId=canonicaljson -Dversion=1.0 -Dpackaging=jar
+	mvnw.cmd package 
 Echo Building complete
 )
 
+ 
+If  "%1" == "" goto RUN_JUNITS
+If  "%2" =="" goto RUN_JUNITS
 
+@REM ---------- RUN generate / validate   json file test. ---------------
 setLocal EnableDelayedExpansion
 set CLASSPATH=" 
 for /R ./lib %%a in (*.jar) do (
@@ -59,13 +66,22 @@ for /R ./lib %%a in (*.jar) do (
 set CLASSPATH=!CLASSPATH!"
 echo !CLASSPATH! 
  
+ 
 Echo Executing ChainScript %1 %2
 %JAVA_EXE%  -cp !CLASSPATH!;.\target\chainscript\ChainScript.jar;.\target\test-classes com.stratumn.chainscript.ChainscriptTest %1 %2
- 
+
 Goto success
+
+Echo Running Junit Tests
+:RUN_JUNITS
+ 
+mvnw.cmd surefire:test
+
+Goto success
+
 
 :error
 Echo No test are run.
 
 :success
-Echo Test run ended.
+Echo Test Run Ended.
