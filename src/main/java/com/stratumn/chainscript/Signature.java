@@ -48,21 +48,7 @@ public class Signature
       this.signature = signature;
    }
 
-   /**
-    * @return the signature
-    */
-   public stratumn.chainscript.Chainscript.Signature getSignature()
-   {
-      return signature;
-   }
-
-   /**
-    * @param signature the signature to set
-    */
-   public void setSignature(stratumn.chainscript.Chainscript.Signature signature)
-   {
-      this.signature = signature;
-   }
+   
 
    /**
     * @returns the version of the signature scheme.
