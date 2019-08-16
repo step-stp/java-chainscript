@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.DisplayName;
@@ -135,8 +136,13 @@ class SegmentTest
    @Test
    void testValidate() throws Exception
    {
-      stratumn.chainscript.Chainscript.LinkMeta linkMeta = stratumn.chainscript.Chainscript.LinkMeta.newBuilder().setAction("init").build();
-      stratumn.chainscript.Chainscript.Link link = stratumn.chainscript.Chainscript.Link.newBuilder().setVersion("1.0.0").setMeta(linkMeta).build();
+      stratumn.chainscript.Chainscript.LinkMeta linkMeta = stratumn.chainscript.Chainscript.LinkMeta.newBuilder()
+         .setAction("init")
+         .setMapId("mapid") 
+         .build();
+      stratumn.chainscript.Chainscript.Link link = stratumn.chainscript.Chainscript.Link.newBuilder()
+         .setVersion("1.0.0")
+         .setMeta(linkMeta).build();
 
       stratumn.chainscript.Chainscript.Segment pbSegment = stratumn.chainscript.Chainscript.Segment.newBuilder().setLink(link).build();
 
@@ -144,9 +150,13 @@ class SegmentTest
 
       segment = new Segment(pbSegment);
       // Mutate the underlying link.
-      link = link.toBuilder().setMeta(link.getMeta().toBuilder().setAction("override").build()).build();
-      segment.setPbLink(link);
-
+      link= link.toBuilder().setMeta(link.getMeta().toBuilder().setAction("override").build()).build();
+      
+      Field linkField = segment.getClass().getDeclaredField("pbLink");
+      linkField.setAccessible(true);
+      linkField.set(segment, link);
+      linkField.setAccessible(false);
+       
       final Exception thrown = assertThrows(Exception.class, () -> {
          segment.validate();
       });
@@ -158,18 +168,18 @@ class SegmentTest
    @DisplayName("rejects unknown version")
    void testUnknownVersion()
    {
-      @SuppressWarnings("unused")
-      final Exception thrown = assertThrows(ChainscriptException.class, () -> {
-
-         stratumn.chainscript.Chainscript.Segment pbSegment = stratumn.chainscript.Chainscript.Segment.newBuilder().build();
-         Segment segment = new Segment(pbSegment);
-      });
-      assertEquals(Error.LinkMissing.toString(), thrown.getMessage());
-   }
+         @SuppressWarnings("unused")
+         final Exception thrown = assertThrows(ChainscriptException.class, () -> {
    
-   @Test
-   @DisplayName("rejects missing link")
-   void tesMissingLink()
+            stratumn.chainscript.Chainscript.Segment pbSegment = stratumn.chainscript.Chainscript.Segment.newBuilder().build();
+            Segment segment = new Segment(pbSegment);
+         });
+         assertEquals(Error.LinkMissing.toString(), thrown.getMessage());
+      }
+      
+      @Test
+      @DisplayName("rejects missing link")
+      void tesMissingLink()
    {
       @SuppressWarnings("unused")
       final Exception thrown = assertThrows(ChainscriptException.class, () -> {
