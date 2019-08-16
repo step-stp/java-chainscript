@@ -19,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.security.KeyPair;
-import java.security.SecureRandom;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.DisplayName;
@@ -30,14 +29,12 @@ import com.stratumn.chainscript.utils.CryptoUtils;
 
 import net.i2p.crypto.eddsa.EdDSAPrivateKey;
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
-import net.i2p.crypto.eddsa.KeyPairGenerator;
-import net.i2p.crypto.eddsa.spec.EdDSANamedCurveSpec;
-import net.i2p.crypto.eddsa.spec.EdDSANamedCurveTable;
 import stratumn.chainscript.Chainscript.Signature.Builder;
 
 class SignatureTest
 {
-
+   
+   
    /***
     * "wraps a proto signature"
     */
@@ -63,11 +60,8 @@ class SignatureTest
    {  
       String sk = "-----BEGIN ED25519 PRIVATE KEY-----\nInvalid key\n-----END ED25519 PRIVATE KEY-----\n";
       String msg = "This is a sample message";
-      EdDSANamedCurveSpec edDsaSpec = EdDSANamedCurveTable.getByName(EdDSANamedCurveTable.ED_25519);
-      KeyPairGenerator generator = new KeyPairGenerator();
-      generator.initialize(edDsaSpec , new SecureRandom());
-      
-      KeyPair pair = (generator).generateKeyPair(); 
+       
+      KeyPair pair = CryptoUtils.generateED25519();  
  
          assertThrows(Exception.class, ()->{
       CryptoUtils.sign( CryptoUtils.decodeEd25519PrivateKey(sk) 
@@ -83,10 +77,8 @@ class SignatureTest
    @DisplayName("Can sign the whole link")
    void testSignLink () throws Exception
    {
-      EdDSANamedCurveSpec edDsaSpec = EdDSANamedCurveTable.getByName(EdDSANamedCurveTable.ED_25519); 
-      KeyPairGenerator generator = new KeyPairGenerator();
-      generator.initialize(edDsaSpec , new SecureRandom());  
-      KeyPair pair = (generator).generateKeyPair(); 
+       
+      KeyPair pair = CryptoUtils.generateED25519(); 
       byte[] privateKey = pair.getPrivate().getEncoded();
        
       
@@ -104,14 +96,27 @@ class SignatureTest
    @DisplayName("Can sign parts of the link")
    void testSignLinkParts () throws Exception
    {
-      EdDSANamedCurveSpec edDsaSpec = EdDSANamedCurveTable.getByName(EdDSANamedCurveTable.ED_25519);
-      KeyPairGenerator generator = new KeyPairGenerator();
-      generator.initialize(edDsaSpec , new SecureRandom());
       
-      KeyPair pair = (generator).generateKeyPair(); 
- 
+      KeyPair pair = CryptoUtils.generateED25519(); 
+      
       Link lnk = new LinkBuilder("p", "m").build();
       Signature sig = Signature.signLink(pair.getPrivate().getEncoded(), lnk ,"[version,data,meta]");
+      
+      assertEquals( lnk.signatures().length,0);
+      assertEquals(  sig.payloadPath(),"[version,data,meta]");
+      
+      sig.validate(lnk);
+   }
+      
+   
+   @Test
+   @DisplayName("Can sign Using PEM private key ")
+   void testSignLinkPEM () throws Exception
+   {
+      String sk = "-----BEGIN ED25519 PRIVATE KEY-----\nMFACAQAwBwYDK2VwBQAEQgRAG4bBxUz5/UFzaCCxlhmpbKtZE313fsfY+hviGNRr\n5RYQjCMpS54rC7az6J7loUCxgGfw4QvsYeMQ8wvcmDE4Sw==\n-----END ED25519 PRIVATE KEY-----\n";
+
+      Link lnk = new LinkBuilder("p", "m").build();
+      Signature sig = Signature.signLink(CryptoUtils.decodeEd25519PrivateKey( sk).getEncoded(), lnk ,"[version,data,meta]");
       
       assertEquals( lnk.signatures().length,0);
       assertEquals(  sig.payloadPath(),"[version,data,meta]");
