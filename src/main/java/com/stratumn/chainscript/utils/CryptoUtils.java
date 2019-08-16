@@ -44,8 +44,8 @@ public class CryptoUtils
    static EdDSANamedCurveSpec ed25519Spec = EdDSANamedCurveTable.getByName(EdDSANamedCurveTable.ED_25519);
 
    public static String cleanToken(String token) {
-      token = token.replaceAll("-----BEGIN MESSAGE-----\n", "");
-      token = token.replaceAll("\n-----END MESSAGE-----", "");
+      token = token.replaceAll("-----.*?-----\n", "");
+      token = token.replaceAll("\n-----.*-----", "");
       return token;
 
   }
@@ -92,14 +92,19 @@ public class CryptoUtils
       String sk = pem.replaceAll("\n", "").replace("-----BEGIN ED25519 PRIVATE KEY-----", "").replace("-----END ED25519 PRIVATE KEY-----", "");
 
       byte[] skBytes = Base64.getDecoder().decode(sk);
-      byte[] seed = Arrays.copyOfRange(skBytes, 18, 50);
-
-//      System.out.println(ed25519Spec.getCurve().getField().getb() / 4);
+      byte[] seed = Arrays.copyOfRange(skBytes, 18, 50); 
+       
       EdDSAPrivateKeySpec key = new EdDSAPrivateKeySpec(seed, ed25519Spec);
       return new EdDSAPrivateKey(key);
    }
    
-   
+   public static EdDSAPrivateKey decodeEd25519PrivateKey(byte[] keyBytes) throws InvalidKeySpecException
+   {
+      
+      byte[] seed = Arrays.copyOfRange(keyBytes, 18, 50); 
+      EdDSAPrivateKeySpec key = new EdDSAPrivateKeySpec(seed, ed25519Spec);
+      return new EdDSAPrivateKey(key);
+   }
 
 /***
  * 
@@ -142,7 +147,7 @@ public class CryptoUtils
     { 
        KeyPairGenerator generator = new KeyPairGenerator();
        generator.initialize(ed25519Spec , new SecureRandom());  
-       KeyPair pair =  generator.generateKeyPair();  
+       KeyPair pair =  generator.generateKeyPair();   
        return pair;
     }
      
