@@ -21,9 +21,10 @@ import java.util.List;
 
 import com.google.protobuf.ByteString;
 
-/**
- * @author STP
- *
+import stratumn.chainscript.Chainscript.SegmentMeta;
+
+/***
+ *  A segment describes an atomic step in your process.  
  */
 public class Segment
 {
@@ -43,9 +44,13 @@ public class Segment
 
       this.pbLink = pbSegment.getLink();
       this.pbSegment = pbSegment;
+      if (pbSegment.getMeta()==null)
+         this.pbSegment = this.pbSegment.toBuilder().setMeta(SegmentMeta.getDefaultInstance()).build();
+      
       Link link = new Link(this.pbLink);
-
-      stratumn.chainscript.Chainscript.SegmentMeta segmentMeta = this.pbSegment.getMeta().toBuilder().setLinkHash(ByteString.copyFrom(link.hash())).build();
+      
+      stratumn.chainscript.Chainscript.SegmentMeta segmentMeta = this.pbSegment.getMeta().toBuilder()
+         .setLinkHash(ByteString.copyFrom(link.hash())).build();
       this.pbSegment = this.pbSegment.toBuilder().setMeta(segmentMeta).build();
    }
 
@@ -179,37 +184,8 @@ public class Segment
       this.link().validate();
    }
 
-   /**
-    * @return the pbLink
-    */
-   public stratumn.chainscript.Chainscript.Link getPbLink()
-   {
-      return pbLink;
-   }
-
-   /**
-    * @param pbLink the pbLink to set
-    */
-   public void setPbLink(stratumn.chainscript.Chainscript.Link pbLink)
-   {
-      this.pbLink = pbLink;
-   }
-
-   /**
-    * @return the pbSegment
-    */
-   public stratumn.chainscript.Chainscript.Segment getPbSegment()
-   {
-      return pbSegment;
-   }
-
-   /**
-    * @param pbSegment the pbSegment to set
-    */
-   public void setPbSegment(stratumn.chainscript.Chainscript.Segment pbSegment)
-   {
-      this.pbSegment = pbSegment;
-   }
+   
+ 
 
    /**
     * Deserialize a segment.
