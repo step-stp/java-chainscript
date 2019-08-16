@@ -52,14 +52,7 @@ public class Link
       this.link = link;
    }
 
-   /**
-    * @param link the link to set
-    */
-   public void setLink(stratumn.chainscript.Chainscript.Link link)
-   {
-      this.link = link;
-   }
-
+ 
    /**
     * A link is usually created as a result of an action.
     * @throws Exception 
@@ -116,7 +109,7 @@ public class Link
       }
       switch(this.version())
       {
-         case Constants.LINK_VERSION_1_0_0:
+         case Constants.LINK_VERSION_1_0_0: 
            return  CanonicalJson.parse(this.link.getData().toStringUtf8()); 
          default:
             throw new ChainscriptException(Error.LinkVersionUnknown);
