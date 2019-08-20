@@ -26,9 +26,7 @@ import org.junit.jupiter.api.Test;
 
 import com.google.protobuf.ByteString;
 import com.stratumn.chainscript.utils.CryptoUtils;
-
-import net.i2p.crypto.eddsa.EdDSAPrivateKey;
-import net.i2p.crypto.eddsa.EdDSAPublicKey;
+ 
 import stratumn.chainscript.Chainscript.Signature.Builder;
 
 class SignatureTest
@@ -61,15 +59,15 @@ class SignatureTest
       String sk = "-----BEGIN ED25519 PRIVATE KEY-----\nInvalid key\n-----END ED25519 PRIVATE KEY-----\n";
       String msg = "This is a sample message";
        
-      KeyPair pair = CryptoUtils.generateED25519();  
+      KeyPair pair = CryptoUtils.generateKeyPair();  
  
          assertThrows(Exception.class, ()->{
-      CryptoUtils.sign( CryptoUtils.decodeEd25519PrivateKey(sk) 
+      CryptoUtils.sign( CryptoUtils.decodePrivateKey(sk) 
          ,   new byte[] {42, 24, 24, 42} );
       });  
-      String signed= CryptoUtils.sign(  (EdDSAPrivateKey) pair.getPrivate() ,  msg.getBytes()); 
+      String signed= CryptoUtils.sign(   pair.getPrivate() ,  msg.getBytes()); 
       
-      assertTrue(CryptoUtils.verify((EdDSAPublicKey)pair.getPublic(), msg.getBytes(), signed));
+      assertTrue(CryptoUtils.verify( pair.getPublic(), msg.getBytes(), signed));
        
    }
  
@@ -78,7 +76,7 @@ class SignatureTest
    void testSignLink () throws Exception
    {
        
-      KeyPair pair = CryptoUtils.generateED25519(); 
+      KeyPair pair = CryptoUtils.generateKeyPair(); 
       byte[] privateKey = pair.getPrivate().getEncoded();
        
       
@@ -97,7 +95,7 @@ class SignatureTest
    void testSignLinkParts () throws Exception
    {
       
-      KeyPair pair = CryptoUtils.generateED25519(); 
+      KeyPair pair = CryptoUtils.generateKeyPair(); 
       
       Link lnk = new LinkBuilder("p", "m").build();
       Signature sig = Signature.signLink(pair.getPrivate().getEncoded(), lnk ,"[version,data,meta]");
@@ -116,7 +114,7 @@ class SignatureTest
       String sk = "-----BEGIN ED25519 PRIVATE KEY-----\nMFACAQAwBwYDK2VwBQAEQgRAG4bBxUz5/UFzaCCxlhmpbKtZE313fsfY+hviGNRr\n5RYQjCMpS54rC7az6J7loUCxgGfw4QvsYeMQ8wvcmDE4Sw==\n-----END ED25519 PRIVATE KEY-----\n";
 
       Link lnk = new LinkBuilder("p", "m").build();
-      Signature sig = Signature.signLink(CryptoUtils.decodeEd25519PrivateKey( sk).getEncoded(), lnk ,"[version,data,meta]");
+      Signature sig = Signature.signLink(CryptoUtils.decodePrivateKey( sk).getEncoded(), lnk ,"[version,data,meta]");
       
       assertEquals( lnk.signatures().length,0);
       assertEquals(  sig.payloadPath(),"[version,data,meta]");

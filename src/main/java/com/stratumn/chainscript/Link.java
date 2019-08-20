@@ -30,6 +30,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
 import com.stratumn.canonicaljson.CanonicalJson;
 import com.stratumn.chainscript.utils.CryptoUtils;
+import com.stratumn.chainscript.utils.JsonHelper;
 
 import io.burt.jmespath.Expression;
 import io.burt.jmespath.JmesPath;
@@ -115,6 +116,29 @@ public class Link
             throw new ChainscriptException(Error.LinkVersionUnknown);
       }
    }
+   
+   /***
+    * Returns custom class
+    * @param clazz
+    * @return
+    * @throws Exception
+    */
+   public <T> T data(Class<T> clazzOfT) throws Exception
+   {
+      this.verifyCompatibility();
+
+      if(this.link.getData() == null || this.link.getData().isEmpty())
+      {
+         return null;
+      }
+      switch(this.version())
+      {
+         case Constants.LINK_VERSION_1_0_0: 
+           return  JsonHelper.fromJson(this.link.getData().toStringUtf8(),clazzOfT); 
+         default:
+            throw new ChainscriptException(Error.LinkVersionUnknown);
+      }
+   }
 
    /**
     * Serialize the link and compute a hash of the resulting bytes.
@@ -164,6 +188,31 @@ public class Link
       {
          case Constants.LINK_VERSION_1_0_0:
             return CanonicalJson.parse(linkMetadata.toStringUtf8());
+ 
+         default:
+            throw new ChainscriptException(Error.LinkVersionUnknown);
+      }
+   }
+   
+   /***
+    * Returns an instance of the custom object of data type clazz
+    * @return
+    * @throws Exception
+    */
+  
+   public <T> T metadata(Class<T> clazzOfT) throws Exception
+   {
+      this.verifyCompatibility();
+      Object result = null;
+      ByteString linkMetadata = getLinkMeta().getData();
+      if(linkMetadata == null || linkMetadata.isEmpty())
+      {   
+         return null;
+      }
+      switch(this.version())
+      {
+         case Constants.LINK_VERSION_1_0_0:
+            return JsonHelper.fromJson( linkMetadata.toStringUtf8(),clazzOfT);
  
          default:
             throw new ChainscriptException(Error.LinkVersionUnknown);
@@ -524,6 +573,32 @@ public class Link
          throw new ChainscriptException(Error.LinkMetaMissing);
       }
       return this.link.getMeta();
+   }
+   
+   /***
+    *  Convert to a json object.
+    * @return
+    */
+   public String toObject() throws ChainscriptException
+   {
+      try
+      {
+         return JsonHelper.toJson(this.link);
+      }
+      catch(IOException e)
+      {
+          throw new ChainscriptException(e);
+      }
+   }
+   
+   /***
+    * Convert a   json object to a link.
+    * @param jsonObject
+    * @return
+    */
+   public static Link fromObject (String jsonObject)
+   { 
+      return new Link( JsonHelper.fromJson(jsonObject, stratumn.chainscript.Chainscript.Link.class) ); 
    }
 
    /**

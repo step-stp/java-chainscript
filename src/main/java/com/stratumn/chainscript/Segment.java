@@ -15,11 +15,13 @@
 */ 
 package com.stratumn.chainscript;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
 import com.google.protobuf.ByteString;
+import com.stratumn.chainscript.utils.JsonHelper;
 
 import stratumn.chainscript.Chainscript.SegmentMeta;
 
@@ -185,7 +187,32 @@ public class Segment
    }
 
    
- 
+   /***
+    *  Convert to a json object.
+    * @return
+    */
+   public String toObject() throws ChainscriptException
+   {
+      try
+      {
+         return JsonHelper.toJson(this.pbSegment);
+      }
+      catch(IOException e)
+      {
+          throw new ChainscriptException(e);
+      }
+   }
+   
+   /***
+    * Convert a   json object to a link.
+    * @param jsonObject
+    * @return
+    * @throws ChainscriptException 
+    */
+   public static Segment fromObject (String jsonObject) throws ChainscriptException
+   { 
+      return new Segment( JsonHelper.fromJson(jsonObject, stratumn.chainscript.Chainscript.Segment.class) ); 
+   }
 
    /**
     * Deserialize a segment.
@@ -199,5 +226,8 @@ public class Segment
       stratumn.chainscript.Chainscript.Segment segment = stratumn.chainscript.Chainscript.Segment.parseFrom(segmentBytes);
       return new Segment(segment);
    }
+   
+   
+  
 
 }

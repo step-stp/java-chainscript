@@ -1,5 +1,6 @@
 package com.stratumn.chainscript.testcases;
 
+import java.security.PrivateKey;
 import java.util.Base64;
 
 import com.stratumn.chainscript.Link;
@@ -7,8 +8,7 @@ import com.stratumn.chainscript.LinkBuilder;
 import com.stratumn.chainscript.Segment;
 import com.stratumn.chainscript.Signature;
 import com.stratumn.chainscript.utils.CryptoUtils;
-
-import net.i2p.crypto.eddsa.EdDSAPrivateKey; 
+ 
 
 /**
  * Test a segment with custom data and metadata but no references, evidences
@@ -27,7 +27,7 @@ public class SignaturesTest implements ITestCase
    @Override
    public String generate() throws Exception  
    {
-      EdDSAPrivateKey ed255Key = (EdDSAPrivateKey) CryptoUtils.generateED25519().getPrivate();
+      PrivateKey ed255Key =  CryptoUtils.generateKeyPair().getPrivate();
       
 //      KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
 //      kpg.initialize(1024 );  

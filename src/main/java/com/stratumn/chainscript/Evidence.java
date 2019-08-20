@@ -15,10 +15,13 @@
 */ 
 package com.stratumn.chainscript;
 
+import java.io.IOException;
+
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.stratumn.chainscript.utils.JsonHelper;
 
 /**
  * Evidences can be used to externally verify a link's existence at a given
@@ -161,6 +164,33 @@ public class Evidence
       this.proof = proof;
    }
    
+   /***
+    *  Convert to a json object.
+    * @return
+    */
+   public String toObject() throws ChainscriptException
+   {
+      try
+      {
+         return JsonHelper.toJson(toProto());
+      }
+      catch(IOException e)
+      {
+          throw new ChainscriptException(e);
+      }
+   }
+   
+   /***
+    * Convert a   json object to a link.
+    * @param jsonObject
+    * @return
+    * @throws ChainscriptException 
+    */
+   public static Evidence fromObject (String jsonObject) throws ChainscriptException
+   { 
+      stratumn.chainscript.Chainscript.Evidence e = JsonHelper.fromJson(jsonObject, stratumn.chainscript.Chainscript.Evidence.class);
+      return fromProto(e) ;
+   }
    
    /**
     * Create an evidence from a protobuf object.
@@ -175,6 +205,18 @@ public class Evidence
       byte[] proof = object.getProof() != null ? object.getProof().toByteArray() : new byte[0];
 
       return new Evidence(version, backend, provider, proof);
+   }
+   
+   /***
+    * Creates a protobuf object from this evidence obj.
+    * @return
+    */
+   public  stratumn.chainscript.Chainscript.Evidence toProto( )
+   {
+      return stratumn.chainscript.Chainscript.Evidence.newBuilder()
+      .setBackend(this.backend).setVersion(this.getVersion())
+      .setProvider(this.provider).setProof(ByteString.copyFrom(this.proof)).build();
+      
    }
 
    /**
@@ -196,4 +238,7 @@ public class Evidence
       }
       return fromProto(pbEvidence);
    }
+   
+   
+   
 }

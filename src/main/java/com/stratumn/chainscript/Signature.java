@@ -15,20 +15,20 @@
 */ 
 package com.stratumn.chainscript;
 
+import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
 
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.protobuf.ByteString;
 import com.stratumn.chainscript.utils.CryptoUtils;
-
-import net.i2p.crypto.eddsa.EdDSAPrivateKey;
-import net.i2p.crypto.eddsa.EdDSAPublicKey;
+import com.stratumn.chainscript.utils.JsonHelper;
 
 /**
  * A signature of configurable parts of a link.
@@ -115,7 +115,7 @@ public class Signature
             String publicKeyString  =   Base64.getEncoder().encodeToString(  this.publicKey() )  ;
                 
             try {
-               EdDSAPublicKey publicKey = CryptoUtils.decodeEd25519PublicKey( publicKeyString ); 
+               PublicKey publicKey = CryptoUtils.decodePublicKey( publicKeyString ); 
                if(!CryptoUtils.verify(publicKey,   signed  ,new String(  signature()) ))
                { 
                   throw new ChainscriptException(Error.SignatureInvalid);
@@ -139,14 +139,15 @@ public class Signature
    public static Signature sign(byte[] key, byte[] toSign) throws  ChainscriptException
    {
       String signedMessage;
-      EdDSAPublicKey publicKey =null;
+      PublicKey publicKey =null;
       try
       {  
            
-         EdDSAPrivateKey privateKey =  new EdDSAPrivateKey(new PKCS8EncodedKeySpec(key));
+         
+         PrivateKey privateKey = CryptoUtils.decodePrivateKey(key);
          
          signedMessage = CryptoUtils.sign(privateKey, toSign);
-         publicKey = CryptoUtils.recoverEd25519PublicKey(privateKey);
+         publicKey = CryptoUtils.getPublicKeyFromPrivateKey(privateKey);
       }
       catch(InvalidKeyException | NoSuchAlgorithmException | SignatureException | InvalidKeySpecException e)
       {
@@ -191,5 +192,33 @@ public class Signature
 
       return new Signature(sig);
    }
+   
+   
+   /***
+    *  Convert to a json object.
+    * @return
+    */
+   public String toObject() throws ChainscriptException
+   {
+      try
+      {
+         return JsonHelper.toJson(this.signature);
+      }
+      catch(IOException e)
+      {
+          throw new ChainscriptException(e);
+      }
+   }
+   
+   /***
+    * Convert a   json object to a link.
+    * @param jsonObject
+    * @return
+    */
+   public static Signature fromObject (String jsonObject)
+   { 
+      return new Signature( JsonHelper.fromJson(jsonObject, stratumn.chainscript.Chainscript.Signature.class) ); 
+   }
+
 
 }

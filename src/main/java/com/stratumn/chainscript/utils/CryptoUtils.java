@@ -21,6 +21,8 @@ import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.Signature;
 import java.security.SignatureException;
@@ -60,7 +62,7 @@ public class CryptoUtils
       return Base64.getDecoder().decode(s);
    }
 
-   public static String sign(EdDSAPrivateKey key, byte[] message) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException
+   public static String sign(PrivateKey key, byte[] message) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException
    {
       Signature sgr = new EdDSAEngine(MessageDigest.getInstance(ed25519Spec.getHashAlgorithm()));
       sgr.initSign(key);
@@ -70,7 +72,7 @@ public class CryptoUtils
    }
 
    
-   public static boolean verify(EdDSAPublicKey key, byte[] message, String encodedSig) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException
+   public static boolean verify(PublicKey key, byte[] message, String encodedSig) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException
    {
       byte[] sig = CryptoUtils.decodeSignature(encodedSig);
 
@@ -87,7 +89,7 @@ public class CryptoUtils
    // serializer/deserializer.
    // In the mean time, we manually extract the seed from the encoded key, which is
    // the 32 first bytes  of the privateKey section of the ASN1 encoded data.
-   public static EdDSAPrivateKey decodeEd25519PrivateKey(String pem) throws InvalidKeySpecException
+   public static PrivateKey decodePrivateKey(String pem) throws InvalidKeySpecException
    {
       String sk = pem.replaceAll("\n", "").replace("-----BEGIN ED25519 PRIVATE KEY-----", "").replace("-----END ED25519 PRIVATE KEY-----", "");
 
@@ -98,9 +100,15 @@ public class CryptoUtils
       return new EdDSAPrivateKey(key);
    }
    
-   public static EdDSAPrivateKey decodeEd25519PrivateKey(byte[] keyBytes) throws InvalidKeySpecException
+   /***
+    * Creates a private key from byte array.
+    * @param keyBytes
+    * @return
+    * @throws InvalidKeySpecException
+    */
+   public static PrivateKey decodePrivateKey(byte[] keyBytes) throws InvalidKeySpecException
    {
-      
+      // EdDSAPrivateKey privateKey =  new EdDSAPrivateKey(new PKCS8EncodedKeySpec(key));
       byte[] seed = Arrays.copyOfRange(keyBytes, 18, 50); 
       EdDSAPrivateKeySpec key = new EdDSAPrivateKeySpec(seed, ed25519Spec);
       return new EdDSAPrivateKey(key);
@@ -112,7 +120,7 @@ public class CryptoUtils
  * @return
  * @throws InvalidKeySpecException
  */
-   public static EdDSAPublicKey decodeEd25519PublicKey(String pem) throws InvalidKeySpecException
+   public static PublicKey decodePublicKey(String pem) throws InvalidKeySpecException
    {
       String pk = pem.replaceAll("\n", "").replace("-----BEGIN ED25519 PUBLIC KEY-----", "").replace("-----END ED25519 PUBLIC KEY-----", "");
 
@@ -123,13 +131,31 @@ public class CryptoUtils
    
    
    /***
+    * Encodes a public key to PEM
+    * "-----BEGIN ED25519 PUBLIC KEY-----\nMCowBQYDK2VwAyEAewajeBYqSKxqcnJb209RSkH2CyaXgV3gotjq60DE4Is=\n-----END ED25519 PUBLIC KEY-----"; 
+    * @param key
+    * @return
+    * @throws InvalidKeySpecException
+    */
+   public static String encodePublicKey(PublicKey key) throws InvalidKeySpecException
+   {
+      EdDSAPublicKey edDSAPublicKey = (EdDSAPublicKey) key;
+      byte[] pkBytes = Base64.getEncoder().encode(edDSAPublicKey.getEncoded() );
+      StringBuffer keyBuff = new StringBuffer();
+      keyBuff.append("-----BEGIN ED25519 PUBLIC KEY-----\n")
+      .append(new String(pkBytes))
+      .append("\n-----END ED25519 PUBLIC KEY-----");
+      return keyBuff.toString();
+   }
+   
+   /***
     * Recover public key from private key.
     * @param key
     * @return
     * @throws InvalidKeyException 
     * @throws GeneralSecurityException
     */
-   public static EdDSAPublicKey recoverEd25519PublicKey(EdDSAPrivateKey key) throws InvalidKeyException {
+   public static PublicKey getPublicKeyFromPrivateKey(PrivateKey key) throws InvalidKeyException {
         
       EdDSAPrivateKey privKey = (EdDSAPrivateKey) key;
       EdDSAPublicKeySpec keySpec = new EdDSAPublicKeySpec(privKey.getA(), privKey.getParams());
@@ -143,7 +169,7 @@ public class CryptoUtils
     * @return
     * @throws InvalidAlgorithmParameterException
     */
-    public static KeyPair generateED25519() throws InvalidAlgorithmParameterException
+    public static KeyPair generateKeyPair() throws InvalidAlgorithmParameterException
     { 
        KeyPairGenerator generator = new KeyPairGenerator();
        generator.initialize(ed25519Spec , new SecureRandom());  
@@ -170,4 +196,26 @@ public class CryptoUtils
        byte[] resultBytes = digest.digest(inputBytes);
        return resultBytes;
     }
+    
+    /***
+     * Provides a SHA516 has of inputbytes
+     * @param inputBytes
+     * @return
+     */
+    public static byte[]  sha512(byte[] inputBytes)
+    {
+       MessageDigest digest;
+       try
+       { 
+          digest = MessageDigest.getInstance("SHA-512");
+       }  
+       catch(NoSuchAlgorithmException e)
+       {
+          throw new RuntimeException(e);
+       }
+       
+       byte[] resultBytes = digest.digest(inputBytes);
+       return resultBytes; 
+    }
+
 }
