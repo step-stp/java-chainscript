@@ -28,8 +28,7 @@ public class LinkReference
    /**
     * @param linkHash
     * @param process
-    * @throws ChainscriptException 
-    * @throws Exception 
+    * @throws ChainscriptException  
     */
    public LinkReference(byte[] linkHash, String process) throws ChainscriptException 
    {

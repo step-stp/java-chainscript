@@ -56,10 +56,10 @@ public class Link
  
    /**
     * A link is usually created as a result of an action.
-    * @throws Exception 
+     * @throws ChainscriptException
     * @returns the link's action.
     */
-   public String action() throws Exception
+   public String action() throws ChainscriptException
    {
 
       return getLinkMeta().getAction() == null ? "" : getLinkMeta().getAction();
@@ -68,10 +68,10 @@ public class Link
    /**
     * Add a signature to the link.
     * This will validate the signature before adding it.
-    * @param signature link signature.
-    * @throws Exception 
+    * @param signature link signature. 
+    * @throws ChainscriptException 
     */
-   public void addSignature(Signature signature) throws Exception
+   public void addSignature(Signature signature) throws ChainscriptException 
    {
       signature.validate(this);
 
@@ -86,21 +86,21 @@ public class Link
 
    /**
     * The client id allows segment receivers to figure out how the segment was
-    * encoded and can be decoded.
-    * @throws Exception 
+    * encoded and can be decoded. 
+    * @throws ChainscriptException 
     * @returns the link's client id.
     */
-   public String clientId() throws Exception
+   public String clientId() throws ChainscriptException 
    {
       return getLinkMeta().getClientId() == null ? "" : getLinkMeta().getClientId();
    }
 
    /**
-    * The link data (business logic details about the execution of a process step).
-    * @throws Exception 
+    * The link data (business logic details about the execution of a process step). 
+    * @throws ChainscriptException 
     * @returns the object containing the link details.
     */
-   public Object data() throws Exception
+   public Object data() throws ChainscriptException 
    {
       this.verifyCompatibility();
 
@@ -111,7 +111,14 @@ public class Link
       switch(this.version())
       {
          case Constants.LINK_VERSION_1_0_0: 
-           return  CanonicalJson.parse(this.link.getData().toStringUtf8()); 
+            try
+            {
+               return  CanonicalJson.parse(this.link.getData().toStringUtf8());
+            }
+            catch(IOException e)
+            {
+               throw new ChainscriptException("Link data parsing error",e);
+            } 
          default:
             throw new ChainscriptException(Error.LinkVersionUnknown);
       }
@@ -120,10 +127,10 @@ public class Link
    /***
     * Returns custom class
     * @param clazz
-    * @return
-    * @throws Exception
+    * @return 
+    * @throws ChainscriptException 
     */
-   public <T> T data(Class<T> clazzOfT) throws Exception
+   public <T> T data(Class<T> clazzOfT) throws ChainscriptException  
    {
       this.verifyCompatibility();
 
@@ -142,11 +149,11 @@ public class Link
 
    /**
     * Serialize the link and compute a hash of the resulting bytes.
-    * The serialization and hashing algorithm used depend on the link version.
-    * @throws Exception 
+    * The serialization and hashing algorithm used depend on the link version. 
+    * @throws ChainscriptException 
     * @returns the hash bytes.
     */
-   public byte[] hash() throws ChainscriptException
+   public byte[] hash() throws ChainscriptException  
    {
       switch(this.version())
       {
@@ -161,10 +168,10 @@ public class Link
 
    /**
     * A link always belongs to a specific process map.
-    * @throws Exception 
+    * @throws ChainscriptException  
     * @returns the link's map id.
     */
-   public String mapId() throws Exception
+   public String mapId() throws ChainscriptException 
    {
       LinkMeta meta = getLinkMeta();
       return StringUtils.isEmpty(meta.getMapId()) ? "" : meta.getMapId();
@@ -172,10 +179,10 @@ public class Link
 
    /**
     * The link metadata can contain a custom object.
-    * @throws Exception 
+    * @throws ChainscriptException  
     * @returns the object containing the link metadata details.
     */
-   public Object metadata() throws Exception
+   public Object metadata() throws ChainscriptException
    {
       this.verifyCompatibility();
       Object result = null;
@@ -187,7 +194,14 @@ public class Link
       switch(this.version())
       {
          case Constants.LINK_VERSION_1_0_0:
-            return CanonicalJson.parse(linkMetadata.toStringUtf8());
+            try
+            {
+               return CanonicalJson.parse(linkMetadata.toStringUtf8());
+            }
+            catch(IOException e)
+            {
+               throw new ChainscriptException("Metadata parsing error",e);
+            }
  
          default:
             throw new ChainscriptException(Error.LinkVersionUnknown);
@@ -197,13 +211,12 @@ public class Link
    /***
     * Returns an instance of the custom object of data type clazz
     * @return
-    * @throws Exception
+    * @throws ChainscriptException   
     */
   
-   public <T> T metadata(Class<T> clazzOfT) throws Exception
+   public <T> T metadata(Class<T> clazzOfT) throws ChainscriptException  
    {
-      this.verifyCompatibility();
-      Object result = null;
+      this.verifyCompatibility(); 
       ByteString linkMetadata = getLinkMeta().getData();
       if(linkMetadata == null || linkMetadata.isEmpty())
       {   
@@ -222,21 +235,21 @@ public class Link
    /**
     * Maximum number of children a link is allowed to have.
     * This is set to -1 if the link is allowed to have as many children as it
-    * wants.
-    * @throws Exception 
+    * wants. 
+    * @throws ChainscriptException 
     * @returns the maximum number of children allowed.
     */
-   public int outDegree() throws Exception
+   public int outDegree() throws ChainscriptException 
    {
       return getLinkMeta().getOutDegree();
    }
 
    /**
-    * A link can have a parent, referenced by its link hash.
-    * @throws Exception 
+    * A link can have a parent, referenced by its link hash. 
+    * @throws ChainscriptException 
     * @returns the parent link hash.
     */
-   public byte[] prevLinkHash() throws Exception
+   public byte[] prevLinkHash() throws ChainscriptException  
    {
       if(getLinkMeta().getPrevLinkHash() == null)
       {
@@ -246,11 +259,11 @@ public class Link
    }
 
    /**
-    * The priority can be used to order links.
-    * @throws Exception 
+    * The priority can be used to order links. 
+    * @throws ChainscriptException 
     * @returns the link's priority.
     */
-   public double priority() throws Exception
+   public double priority() throws ChainscriptException  
    {
       return getLinkMeta().getPriority();
    }
@@ -297,11 +310,11 @@ public class Link
    }
 
    /**
-    * Create a segment from the link.
-    * @throws Exception 
+    * Create a segment from the link. 
+    * @throws ChainscriptException 
     * @returns the segment wrapping the link.
     */
-   public Segment segmentify() throws Exception
+   public Segment segmentify() throws ChainscriptException  
    {
       stratumn.chainscript.Chainscript.Segment segment = stratumn.chainscript.Chainscript.Segment.newBuilder().setLink(this.link).build();
       return new Segment(segment);
@@ -319,8 +332,7 @@ public class Link
    /**
     * Set the given object as the link's data.
     * @param data custom data to save with the link.
-    * @throws ChainscriptException 
-    * @throws Exception 
+    * @throws ChainscriptException  
     */
    public void setData(Object data) throws ChainscriptException  
    {
@@ -347,8 +359,7 @@ public class Link
    /**
     * Set the given object as the link's metadata.
     * @param data custom data to save with the link metadata.
-    * @throws ChainscriptException 
-    * @throws Exception 
+    * @throws ChainscriptException  
     */
    public void setMetadata(Object data) throws ChainscriptException 
    {
@@ -382,9 +393,9 @@ public class Link
     * The signature is added to the link's signature list.
     * @param key private key in PEM format (generated by @stratumn/js-crypto).
     * @param payloadPath link parts that should be signed.
-    * @throws Exception 
+    * @throws ChainscriptException  
     */
-   public void sign(byte[] key, String payloadPath) throws Exception
+   public void sign(byte[] key, String payloadPath) throws ChainscriptException  
    {
       Signature signature = Signature.signLink(key, this, payloadPath);
 
@@ -412,13 +423,13 @@ public class Link
    }
 
    /**
-    * Compute the bytes that should be signed.
-    * @throws Exception 
+    * Compute the bytes that should be signed. 
+    * @throws ChainscriptException 
     * @argument version impacts how those bytes are computed.
     * @argument payloadPath parts of the link that should be signed.
     * @returns bytes to be signed.
     */
-   public byte[] signedBytes(String version, String payloadPath) throws ChainscriptException
+   public byte[] signedBytes(String version, String payloadPath) throws ChainscriptException  
    {
       byte[] hashedResultBytes = null;
       switch(version)
@@ -457,10 +468,10 @@ public class Link
 
    /**
     * (Optional) A link can be interpreted as a step in a process.
-    * @throws Exception 
+    * @throws ChainscriptException  
     * @returns the corresponding process step.
     */
-   public String step() throws Exception
+   public String step() throws ChainscriptException 
    { 
       return StringUtils.isEmpty(getLinkMeta().getStep()) ? "" : getLinkMeta().getStep();
    }
@@ -468,10 +479,10 @@ public class Link
    /**
     * (Optional) A link can be tagged.
     * Tags are useful to filter link search results.
-    * @throws Exception 
+    * @throws ChainscriptException  
     * @returns link tags.
     */
-   public String[] tags() throws Exception
+   public String[] tags() throws ChainscriptException 
    {
 
       String[] result =getLinkMeta().getTagsList()!=null?
@@ -535,19 +546,18 @@ public class Link
 
    /**
     * Check if the link is compatible with the current library.
-    * If not compatible, will throw an exception.
-    * @throws Exception 
+    * If not compatible  
+    * @throws ChainscriptException 
     */
-   private void verifyCompatibility() throws ChainscriptException
+   private void verifyCompatibility() throws ChainscriptException  
    {
 
       if(StringUtils.isEmpty(getLinkMeta().getClientId()))
       {
          throw new ChainscriptException(Error.LinkClientIdUnkown );
       }
-
-      String[] compatibleClients = {Constants.ClientId, "github.com/stratumn/go-chainscript", "github.com/stratumn/js-chainscript" }; 
-      if(!Arrays.asList(compatibleClients).contains(getLinkMeta().getClientId()))
+ 
+      if(!Arrays.asList(Constants.COMPATIBLE_CLIENTS).contains(getLinkMeta().getClientId()))
       {
          throw new ChainscriptException(Error.LinkClientIdUnkown );
       }

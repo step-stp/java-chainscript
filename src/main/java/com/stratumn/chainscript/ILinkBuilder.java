@@ -50,16 +50,16 @@ public interface ILinkBuilder<T extends ILinkBuilder<T > >
    /**
     * Set the link's parent.
     * @param linkHash parent's link hash.
-    * @throws Exception 
+    * @throws ChainscriptException  
     */
-   public T withParent(byte[] linkHash) throws Exception;
+   public T withParent(byte[] linkHash) throws ChainscriptException  ;
 
    /**
     * Set the link's priority. The priority is used to order links.
     * @param priority a positive float.
-    * @throws Exception 
+    * @throws ChainscriptException  
     */
-   public T withPriority(double priority) throws Exception;
+   public T withPriority(double priority) throws ChainscriptException ;
 
    /**
     * (Optional) Set the link process' state.
@@ -72,9 +72,9 @@ public interface ILinkBuilder<T extends ILinkBuilder<T > >
     * (Optional) A link can reference other links, even if they are from other
     * processes.
     * @param refs references to relevant links.
-    * @throws Exception 
+    * @throws ChainscriptException  
     */
-   public T withRefs(LinkReference[] refs) throws Exception;
+   public T withRefs(LinkReference[] refs) throws ChainscriptException  ;
 
    /**
     * (Optional) Set the link's process step.

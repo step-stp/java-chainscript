@@ -27,6 +27,7 @@ import java.security.SecureRandom;
 import java.security.Signature;
 import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 import java.util.Base64;
@@ -95,8 +96,8 @@ public class CryptoUtils
 
       byte[] skBytes = Base64.getDecoder().decode(sk);
       byte[] seed = Arrays.copyOfRange(skBytes, 18, 50); 
-       
-      EdDSAPrivateKeySpec key = new EdDSAPrivateKeySpec(seed, ed25519Spec);
+      
+      EdDSAPrivateKeySpec key = new EdDSAPrivateKeySpec(seed, ed25519Spec); 
       return new EdDSAPrivateKey(key);
    }
    
@@ -108,10 +109,8 @@ public class CryptoUtils
     */
    public static PrivateKey decodePrivateKey(byte[] keyBytes) throws InvalidKeySpecException
    {
-      // EdDSAPrivateKey privateKey =  new EdDSAPrivateKey(new PKCS8EncodedKeySpec(key));
-      byte[] seed = Arrays.copyOfRange(keyBytes, 18, 50); 
-      EdDSAPrivateKeySpec key = new EdDSAPrivateKeySpec(seed, ed25519Spec);
-      return new EdDSAPrivateKey(key);
+      EdDSAPrivateKey privateKey =  new EdDSAPrivateKey(new PKCS8EncodedKeySpec(keyBytes));
+      return privateKey;  
    }
 
 /***
@@ -132,7 +131,6 @@ public class CryptoUtils
    
    /***
     * Encodes a public key to PEM
-    * "-----BEGIN ED25519 PUBLIC KEY-----\nMCowBQYDK2VwAyEAewajeBYqSKxqcnJb209RSkH2CyaXgV3gotjq60DE4Is=\n-----END ED25519 PUBLIC KEY-----"; 
     * @param key
     * @return
     * @throws InvalidKeySpecException
@@ -140,11 +138,22 @@ public class CryptoUtils
    public static String encodePublicKey(PublicKey key) throws InvalidKeySpecException
    {
       EdDSAPublicKey edDSAPublicKey = (EdDSAPublicKey) key;
-      byte[] pkBytes = Base64.getEncoder().encode(edDSAPublicKey.getEncoded() );
+      String pem = Base64.getEncoder().encodeToString(edDSAPublicKey.getEncoded() );
       StringBuffer keyBuff = new StringBuffer();
       keyBuff.append("-----BEGIN ED25519 PUBLIC KEY-----\n")
-      .append(new String(pkBytes))
+      .append( pem  )
       .append("\n-----END ED25519 PUBLIC KEY-----");
+      return keyBuff.toString();
+   }
+   
+   public static String encodePrivateKey(PrivateKey key) throws InvalidKeySpecException
+   {
+      EdDSAPrivateKey edDSAPrivateKey = (EdDSAPrivateKey) key;
+      String pem = Base64.getEncoder().encodeToString(edDSAPrivateKey.getEncoded() );
+      StringBuffer keyBuff = new StringBuffer();
+      keyBuff.append("-----BEGIN ED25519 PRIVATE KEY-----\n")
+      .append(pem)
+      .append("\n-----END ED25519 PRIVATE KEY-----\n");
       return keyBuff.toString();
    }
    

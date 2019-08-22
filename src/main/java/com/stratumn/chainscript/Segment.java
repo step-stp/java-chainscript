@@ -21,6 +21,7 @@ import java.util.Base64;
 import java.util.List;
 
 import com.google.protobuf.ByteString;
+import com.google.protobuf.InvalidProtocolBufferException;
 import com.stratumn.chainscript.utils.JsonHelper;
 
 import stratumn.chainscript.Chainscript.SegmentMeta;
@@ -34,10 +35,11 @@ public class Segment
    private stratumn.chainscript.Chainscript.Segment pbSegment;
 
    /**
-    * @param pbSegment
-    * @throws Exception 
+    * @param pbSegment 
+    * @throws ChainscriptException 
+    * 
     */
-   public Segment(stratumn.chainscript.Chainscript.Segment pbSegment) throws ChainscriptException
+   public Segment(stratumn.chainscript.Chainscript.Segment pbSegment) throws ChainscriptException  
    {
       if(!pbSegment.hasLink())
       {
@@ -77,11 +79,11 @@ public class Segment
    }
 
    /**
-    * Return all the evidences in this segment.
-    * @throws Exception 
+    * Return all the evidences in this segment. 
+    * @throws ChainscriptException 
     * @returns evidences.
     */
-   public Evidence[] evidences() throws Exception
+   public Evidence[] evidences() throws ChainscriptException 
    {
       List<stratumn.chainscript.Chainscript.Evidence> evidences = this.pbSegment.getMeta().getEvidencesList();
 
@@ -95,11 +97,11 @@ public class Segment
 
    /**
     * Return all the evidences of a specific backend.
-    * @param backend of the expected evidences.
-    * @throws Exception 
+    * @param backend of the expected evidences. 
+    * @throws ChainscriptException 
     * @returns evidences.
     */
-   public Evidence[] findEvidences(String backend) throws Exception
+   public Evidence[] findEvidences(String backend) throws ChainscriptException  
    {
       List<stratumn.chainscript.Chainscript.Evidence> evidences = this.pbSegment.getMeta().getEvidencesList();
 
@@ -217,10 +219,11 @@ public class Segment
    /**
     * Deserialize a segment.
     * @param segmentBytes encoded bytes.
-    * @throws Exception 
+    * @throws ChainscriptException 
+    * @throws InvalidProtocolBufferException  
     * @returns the deserialized segment.
     */
-   public static Segment deserialize(byte[] segmentBytes) throws Exception
+   public static Segment deserialize(byte[] segmentBytes) throws ChainscriptException, InvalidProtocolBufferException 
    {
      
       stratumn.chainscript.Chainscript.Segment segment = stratumn.chainscript.Chainscript.Segment.parseFrom(segmentBytes);

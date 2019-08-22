@@ -18,7 +18,6 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class TestUtil
 {
@@ -68,12 +67,7 @@ public class TestUtil
    public static boolean compareMaps(Map<String, ?> first, Map<String, ?> second) {
       if (first.size() != second.size()) {
          return false;
-     }  
-      Map<String, Boolean> com = first.entrySet().stream()
-      .collect(Collectors.toMap(e -> e.getKey(), 
-        e -> e.getValue().getClass().isArray()? 
-           Arrays.equals((byte[]) e.getValue(), (byte[]) second.get(e.getKey())) 
-           : e.getValue().equals(second.get(e.getKey())))); 
+     }   
       return first.entrySet().stream()
          .allMatch(e ->  e.getValue().getClass().isArray()? 
             Arrays.equals((byte[]) e.getValue(), (byte[]) second.get(e.getKey())) :   

@@ -26,6 +26,9 @@ public class Constants
     */
    public static final String ClientId = "github.com/stratumn/java-chainscript";
 
+   public static final String[] COMPATIBLE_CLIENTS = {Constants.ClientId, 
+      "github.com/stratumn/go-chainscript", "github.com/stratumn/js-chainscript" ,
+      "github.com/stratumn/csharp-chainscript"};
    /**
     * LinkVersion_1_0_0 is the first version of the link encoding.
     * In that version we encode interfaces (link.data and link.meta.data) with
