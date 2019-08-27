@@ -18,6 +18,9 @@ package com.stratumn.chainscript;
  * 
  * Common library constants
  */
+
+import java.nio.charset.Charset;
+
 public class Constants
 {
    /**
@@ -49,4 +52,6 @@ public class Constants
    public static final String SIGNATURE_VERSION_1_0_0 = "1.0.0";
    /** The current signature version. */
    public static final String SIGNATURE_VERSION = SIGNATURE_VERSION_1_0_0;
+   
+   public static final Charset UTF8 = Charset.forName("UTF-8");
 }

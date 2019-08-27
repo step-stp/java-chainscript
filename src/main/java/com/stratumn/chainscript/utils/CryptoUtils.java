@@ -66,7 +66,7 @@ public class CryptoUtils
    public static String sign(PrivateKey key, byte[] message) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException
    {
       Signature sgr = new EdDSAEngine(MessageDigest.getInstance(ed25519Spec.getHashAlgorithm()));
-      sgr.initSign(key);
+      sgr.initSign(key); 
       sgr.update(message);
       byte[] sig = sgr.sign();
       return CryptoUtils.encodeSignature(sig);
@@ -96,8 +96,8 @@ public class CryptoUtils
 
       byte[] skBytes = Base64.getDecoder().decode(sk);
       byte[] seed = Arrays.copyOfRange(skBytes, 18, 50); 
-      
-      EdDSAPrivateKeySpec key = new EdDSAPrivateKeySpec(seed, ed25519Spec); 
+       
+      EdDSAPrivateKeySpec key = new EdDSAPrivateKeySpec(seed, ed25519Spec);
       return new EdDSAPrivateKey(key);
    }
    
@@ -112,7 +112,8 @@ public class CryptoUtils
       EdDSAPrivateKey privateKey =  new EdDSAPrivateKey(new PKCS8EncodedKeySpec(keyBytes));
       return privateKey;  
    }
-
+   
+    
 /***
  * 
  * @param pem
@@ -135,18 +136,18 @@ public class CryptoUtils
     * @return
     * @throws InvalidKeySpecException
     */
-   public static String encodePublicKey(PublicKey key) throws InvalidKeySpecException
+   public static String encodePublicKey(PublicKey key)
    {
       EdDSAPublicKey edDSAPublicKey = (EdDSAPublicKey) key;
       String pem = Base64.getEncoder().encodeToString(edDSAPublicKey.getEncoded() );
       StringBuffer keyBuff = new StringBuffer();
       keyBuff.append("-----BEGIN ED25519 PUBLIC KEY-----\n")
       .append( pem  )
-      .append("\n-----END ED25519 PUBLIC KEY-----");
+      .append("\n-----END ED25519 PUBLIC KEY-----\n");
       return keyBuff.toString();
    }
    
-   public static String encodePrivateKey(PrivateKey key) throws InvalidKeySpecException
+   public static String encodePrivateKey(PrivateKey key)  
    {
       EdDSAPrivateKey edDSAPrivateKey = (EdDSAPrivateKey) key;
       String pem = Base64.getEncoder().encodeToString(edDSAPrivateKey.getEncoded() );

@@ -106,7 +106,7 @@ public class LinkBuilder implements ILinkBuilder<LinkBuilder>
    }
 
    @Override
-   public  LinkBuilder withPriority(double priority) throws ChainscriptException  
+   public  LinkBuilder withPriority(double priority) throws ChainscriptException
    {
       if(priority < 0)
       {
@@ -125,9 +125,8 @@ public class LinkBuilder implements ILinkBuilder<LinkBuilder>
       return this;
    }
 
-   
    @Override
-   public LinkBuilder withRefs(LinkReference[] refs) throws ChainscriptException  
+   public LinkBuilder withRefs(LinkReference[] refs) throws ChainscriptException
    {
       if(refs != null)
       {

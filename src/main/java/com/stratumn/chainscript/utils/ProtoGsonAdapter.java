@@ -16,23 +16,24 @@
 package com.stratumn.chainscript.utils;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import com.google.gson.JsonParser;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.google.protobuf.Message;
+import com.google.protobuf.Message.Builder;
 import com.google.protobuf.util.JsonFormat;
 
 public class ProtoGsonAdapter<T extends Message> extends TypeAdapter<T> {
 
       
-      private T.Builder messageBuilder ;
-      public ProtoGsonAdapter(T.Builder messageBuilder)
-      {
-         super();
-         this.messageBuilder = messageBuilder;
-        
+      Class<T> messageClass; 
+      public ProtoGsonAdapter(Class<T> messageClass)
+      { 
+         super(); 
+         this.messageClass = messageClass;
       }
 
       /**
@@ -42,12 +43,22 @@ public class ProtoGsonAdapter<T extends Message> extends TypeAdapter<T> {
       @Override
       public T read(JsonReader jsonReader) throws IOException {
          
-          // Use the JsonFormat class to parse the json string into the builder object
-          // The Json string will be parsed from the JsonReader object
-          JsonParser jsonParser = new JsonParser();
-          JsonFormat.parser().merge(jsonParser.parse(jsonReader).toString(), messageBuilder);
-          // Return the built @Link message 
-          return (T) messageBuilder.build();
+         T.Builder messageBuilder;
+         try
+         {
+             messageBuilder = (Builder) (messageClass.getDeclaredMethod("newBuilder").invoke(null));
+            
+             // Use the JsonFormat class to parse the json string into the builder object
+             // The Json string will be parsed from the JsonReader object
+             JsonParser jsonParser = new JsonParser();
+             JsonFormat.parser().merge(jsonParser.parse(jsonReader).toString(), messageBuilder);
+             // Return the built @Link message 
+             return (T) messageBuilder.build();
+         }  
+         catch(SecurityException | NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e)
+         {
+          throw new IOException(e);
+         }
       }
 
       /**

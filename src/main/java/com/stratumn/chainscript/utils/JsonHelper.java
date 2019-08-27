@@ -16,6 +16,8 @@
 package com.stratumn.chainscript.utils;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -29,18 +31,43 @@ import com.stratumn.canonicaljson.CanonicalJson;
  */
 public class JsonHelper
 {
-   private static Gson gson ;
+   private static GsonBuilder gsonBuilder ;
    
-   static { 
-      GsonBuilder gsonBuilder = new GsonBuilder();
-      gsonBuilder = gsonBuilder
-         .registerTypeAdapter(stratumn.chainscript.Chainscript.Link.class, new ProtoGsonAdapter<stratumn.chainscript.Chainscript.Link>(stratumn.chainscript.Chainscript.Link.newBuilder()))
-         .registerTypeAdapter(stratumn.chainscript.Chainscript.Segment.class, new ProtoGsonAdapter<stratumn.chainscript.Chainscript.Link>(stratumn.chainscript.Chainscript.Segment.newBuilder()))
-         .registerTypeAdapter(stratumn.chainscript.Chainscript.Signature.class, new ProtoGsonAdapter<stratumn.chainscript.Chainscript.Link>(stratumn.chainscript.Chainscript.Signature.newBuilder()))
-         .registerTypeAdapter(stratumn.chainscript.Chainscript.Evidence.class, new ProtoGsonAdapter<stratumn.chainscript.Chainscript.Link>(stratumn.chainscript.Chainscript.Evidence.newBuilder()))
-           ;
-      gsonBuilder.serializeNulls();     
-      gson =gsonBuilder.create();  
+   private static GsonBuilder getGsonBuilder()
+   {
+      if(gsonBuilder == null)
+      {
+         gsonBuilder = new GsonBuilder()
+            .registerTypeAdapter(stratumn.chainscript.Chainscript.Link.class,
+               new ProtoGsonAdapter<stratumn.chainscript.Chainscript.Link>(stratumn.chainscript.Chainscript.Link.class))
+            .registerTypeAdapter(stratumn.chainscript.Chainscript.Segment.class,
+               new ProtoGsonAdapter<stratumn.chainscript.Chainscript.Segment>(stratumn.chainscript.Chainscript.Segment.class))
+            .registerTypeAdapter(stratumn.chainscript.Chainscript.Signature.class,
+               new ProtoGsonAdapter<stratumn.chainscript.Chainscript.Signature>(stratumn.chainscript.Chainscript.Signature.class))
+            .registerTypeAdapter(stratumn.chainscript.Chainscript.Evidence.class,
+               new ProtoGsonAdapter<stratumn.chainscript.Chainscript.Evidence>(stratumn.chainscript.Chainscript.Evidence.class));
+         ;
+         gsonBuilder.serializeNulls().disableHtmlEscaping();
+      }
+      return gsonBuilder;
+   }
+   
+   public static Gson getGson()
+   { 
+      
+      return getGsonBuilder().create();
+   }
+   
+   /***
+    * Expose registeration of new type adapters
+    * @param type
+    * @param typeAdapter
+    */
+   public static void registerTypeAdapter (Type type, Object typeAdapter)
+   {
+       
+      getGsonBuilder().registerTypeAdapter(type, typeAdapter);
+      
    }
    
    /***
@@ -51,13 +78,13 @@ public class JsonHelper
     */
    public  static <T>  T fromJson(String json ,  Class<T> classOfT)
    {
-      return gson.fromJson(json, classOfT);
+      return getGson().fromJson(json, classOfT);
    }
    
    
    public  static <T>  T fromJson(JsonElement json , Class<T> typeOfT)
    {
-      return gson.fromJson(json, typeOfT);
+      return  getGson().fromJson(json, typeOfT);
    }
    
    /***
@@ -68,8 +95,39 @@ public class JsonHelper
     */
    public static String toCanonicalJson( Object src) throws IOException
    {
-      String json = gson.toJson(src);
+      String json =  getGson().toJson(src);
       return CanonicalJson.canonizalize(json);
+   }
+
+   /***
+    * Converts an object or JsonString to a map 
+    * @param srcObject
+    * @return tree map of all object properties
+    */ 
+   public static Map<String,Object> objectToMap(Object srcObject) 
+   {   
+       String json = null;
+       if (!(srcObject instanceof String))
+            json = getGson().toJson(srcObject);
+       else
+            json = (String) srcObject;
+            
+        @SuppressWarnings("unchecked")
+        Map<String,Object> map =(Map<String,Object>) getGson().fromJson(json,  Map.class);
+       return map;
+   }
+    
+   /***
+    * Converts a map to an object of type T 
+    * @param srcMap
+    * @param tClass 
+    * @return an object deserialized from the properties on the map.
+    */
+   public static <T> T mapToObject(Map<String,Object> srcMap, Class<T> tClass) 
+   {
+       String json = getGson().toJson(srcMap);
+       T tObject =  getGson().fromJson(json,  tClass);
+       return tObject;
    }
    
    /***
@@ -80,7 +138,7 @@ public class JsonHelper
     */
    public static String toJson( Object src) throws IOException
    {
-      String json = gson.toJson(src);
+      String json =  getGson().toJson(src);
       return json;
    }
 }

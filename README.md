@@ -2,6 +2,7 @@
 
 To build/test the project and run one of the following.
 
+Ensure CanonicalJson is available on local repository be executing RunTest.cmd first
 
 **RunTest.cmd** 
 Runs Tests only 
@@ -17,6 +18,3 @@ or
 The validate will read the generated file, deserialize it and check all the data within against all the test cases.  
   
  
-To clean a previous build run the following: 
-mvnw.cmd clean 
-

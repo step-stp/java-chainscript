@@ -35,11 +35,10 @@ public class Segment
    private stratumn.chainscript.Chainscript.Segment pbSegment;
 
    /**
-    * @param pbSegment 
+    * @param pbSegment
     * @throws ChainscriptException 
-    * 
     */
-   public Segment(stratumn.chainscript.Chainscript.Segment pbSegment) throws ChainscriptException  
+   public Segment(stratumn.chainscript.Chainscript.Segment pbSegment) throws ChainscriptException
    {
       if(!pbSegment.hasLink())
       {
@@ -79,11 +78,11 @@ public class Segment
    }
 
    /**
-    * Return all the evidences in this segment. 
+    * Return all the evidences in this segment.
     * @throws ChainscriptException 
     * @returns evidences.
     */
-   public Evidence[] evidences() throws ChainscriptException 
+   public Evidence[] evidences() throws ChainscriptException
    {
       List<stratumn.chainscript.Chainscript.Evidence> evidences = this.pbSegment.getMeta().getEvidencesList();
 
@@ -97,11 +96,11 @@ public class Segment
 
    /**
     * Return all the evidences of a specific backend.
-    * @param backend of the expected evidences. 
+    * @param backend of the expected evidences.
     * @throws ChainscriptException 
     * @returns evidences.
     */
-   public Evidence[] findEvidences(String backend) throws ChainscriptException  
+   public Evidence[] findEvidences(String backend) throws ChainscriptException
    {
       List<stratumn.chainscript.Chainscript.Evidence> evidences = this.pbSegment.getMeta().getEvidencesList();
 
@@ -220,13 +219,20 @@ public class Segment
     * Deserialize a segment.
     * @param segmentBytes encoded bytes.
     * @throws ChainscriptException 
-    * @throws InvalidProtocolBufferException  
     * @returns the deserialized segment.
     */
-   public static Segment deserialize(byte[] segmentBytes) throws ChainscriptException, InvalidProtocolBufferException 
+   public static Segment deserialize(byte[] segmentBytes) throws ChainscriptException
    {
      
-      stratumn.chainscript.Chainscript.Segment segment = stratumn.chainscript.Chainscript.Segment.parseFrom(segmentBytes);
+      stratumn.chainscript.Chainscript.Segment segment;
+      try
+      {
+         segment = stratumn.chainscript.Chainscript.Segment.parseFrom(segmentBytes);
+      }
+      catch(InvalidProtocolBufferException e)
+      {
+          throw new ChainscriptException("Failed to parse segment.");
+      }
       return new Segment(segment);
    }
    

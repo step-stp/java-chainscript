@@ -12,7 +12,8 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
-*/ package com.stratumn.chainscript;
+*/
+package com.stratumn.chainscript;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -33,7 +34,7 @@ class LinkBuilderTest
 
       Link link = new LinkBuilder("p", "m").withAction("a").build();
       assertEquals(link.version(), "1.0.0");
-      assertEquals(link.clientId(), "github.com/stratumn/java-chainscript");
+      assertEquals(link.clientId(), Constants.ClientId);
       assertEquals(link.process().getName(), "p");
       assertEquals(link.mapId(), "m");
       assertEquals(link.outDegree(), -1);

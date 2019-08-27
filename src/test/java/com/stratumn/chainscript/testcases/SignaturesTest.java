@@ -28,18 +28,12 @@ public class SignaturesTest implements ITestCase
    public String generate() throws Exception  
    {
       PrivateKey ed255Key =  CryptoUtils.generateKeyPair().getPrivate();
-      
-//      KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
-//      kpg.initialize(1024 );  
-//      KeyPair kp = kpg.generateKeyPair();
-//      RSAPrivateKey rsaKey = (RSAPrivateKey) kp.getPrivate();
-      
+ 
       Link link = new LinkBuilder("test_process", "test_map")
       .withAction("ʙᴀᴛᴍᴀɴ").build();
       link.sign(ed255Key.getEncoded(), "");
       link.sign(ed255Key.getEncoded(), "[version,meta.mapId]");
-//      link.sign(rsaKey.getEncoded(), "[version,meta.mapId]");
-      
+ 
       Segment segment = link.segmentify();
        
       return Base64.getEncoder().encodeToString(segment.serialize());

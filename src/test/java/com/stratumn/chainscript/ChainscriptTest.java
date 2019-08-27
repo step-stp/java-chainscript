@@ -14,6 +14,8 @@
   limitations under the License.
 */package com.stratumn.chainscript;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -36,9 +38,9 @@ class ChainscriptTest
 
    static List<ITestCase> TestCases =  
       Arrays.asList(new ITestCase[] { 
-         new  SimpleSegmentTest(),
+        new  SimpleSegmentTest() ,
          new ReferencesTest(),
-         new EvidencesTest(),
+        new EvidencesTest(), 
          new SignaturesTest() 
          
       }) ; 
@@ -46,7 +48,7 @@ class ChainscriptTest
    @Test
    void runTests()
    {
-      String path = "./1.0.0_T.json";
+      String path = "1.0.0_T.json";
       File file = new File(path);
       
       try
@@ -57,6 +59,7 @@ class ChainscriptTest
       catch(Exception e)
       { 
          e.printStackTrace();
+         fail(e.getMessage());
       }
       
    }
@@ -92,8 +95,9 @@ class ChainscriptTest
     * @param path to the file containing the test segments.
     * @throws Exception 
     */
-   private static void validate(File inputFile) throws Exception
+   private static boolean validate(File inputFile) throws Exception
    { 
+      boolean result = true;
       if (!inputFile.exists())
       {
          throw new Exception("File not found " + inputFile.getAbsolutePath());
@@ -104,31 +108,34 @@ class ChainscriptTest
       TestCaseResult[] resultArr = new Gson().fromJson(jsonData, TestCaseResult[].class);
       
       ITestCase testCase ;
-      for ( TestCaseResult result: resultArr)
+      for ( TestCaseResult caseResult: resultArr)
       { 
-         if (result.getId().equalsIgnoreCase(SimpleSegmentTest.id))
+         if (caseResult.getId().equalsIgnoreCase(SimpleSegmentTest.id))
             testCase = new SimpleSegmentTest();
-         else if (result.getId().equalsIgnoreCase(SignaturesTest.id))
+         else if (caseResult.getId().equalsIgnoreCase(SignaturesTest.id))
             testCase = new SignaturesTest();
-         else if (result.getId().equalsIgnoreCase(ReferencesTest.id))
+         else if (caseResult.getId().equalsIgnoreCase(ReferencesTest.id))
             testCase = new ReferencesTest();
-         else if (result.getId().equalsIgnoreCase(EvidencesTest.id))
+         else if (caseResult.getId().equalsIgnoreCase(EvidencesTest.id))
             testCase = new EvidencesTest();
          else
-         {   System.err.println("Unknown test case : " + result.getId());
-           
-           continue;
+         {   
+            
+            System.err.println("Unknown test case : " + caseResult.getId());
+           result &=false;
+            continue;
          }
           
          try {
-          testCase.validate( result.getData());
-          System.out.println(result.getId() + " SUCCESS "  );
+          testCase.validate( caseResult.getData());
+          System.out.println(caseResult.getId() + " SUCCESS "  );
          }catch (Exception e) {
-            System.err.println(result.getId() + " FAILED " + e.getMessage());
-          
+            System.err.println(caseResult.getId() + " FAILED " + e.getMessage());
+            result &= false;
          } 
       }
        
+      return result;
    }
    
    /**
@@ -136,13 +143,14 @@ class ChainscriptTest
     * @param path to the file where test segments will be written.
     * @throws  Exception 
     */
-   private static void generate(File outputFile) throws Exception
+   private static boolean generate(File outputFile) throws Exception
    {
        System.out.println ("Saving encoded segments to " + outputFile.getAbsolutePath()  ); 
-       if (!outputFile.getParentFile().exists())
+       if (!outputFile.getAbsoluteFile().getParentFile().exists())
        {  //create directory if doesn't exist.
           outputFile.getParentFile().mkdirs();
        }
+       boolean result = true;
        List<TestCaseResult> results = new ArrayList<TestCaseResult>();
        for (ITestCase tcase: TestCases)
        {
@@ -151,14 +159,16 @@ class ChainscriptTest
             results.add(new TestCaseResult(tcase.getId(), tcase.generate()));
          }
          catch(Exception e)
-         {  e.printStackTrace();
+         { 
+            result &=false;
+             e.printStackTrace();
             results.add(new TestCaseResult(tcase.getId(),  e.getMessage()));
          }
        }
-       
-       
-       String resultStr = (new GsonBuilder().setPrettyPrinting().create()).toJson(results);
+        
+       String resultStr = (new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create()).toJson(results);
        Files.write(outputFile.toPath(), resultStr.getBytes() );
+       return result;
    }
    
    

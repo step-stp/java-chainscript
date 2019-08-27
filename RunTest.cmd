@@ -46,9 +46,11 @@ SET JAVA_EXE="%JAVA_HOME%\bin\java.exe"
 
 @REM    -------- BUILD  -----------
  
-IF  exist "target\chainscript\ChainScript.jar"  goto RUNTEST
+ 
 Echo Building classes
-	call mvnw.cmd package -DskipTests install:install-file -Dfile=lib/CanonicalJson.jar  -DgroupId=com.stratumn -DartifactId=canonicaljson -Dversion=1.0 -Dpackaging=jar
+	call mvnw.cmd clean
+	call mvnw.cmd package install -DskipTests 
+	call mvnw.cmd test 
 Echo Building complete
   
 
@@ -59,8 +61,8 @@ Echo Test execution phase
 Set ACTION=%~1
 Set FILEPATH=%~2 
 
-If "%ACTION%" == "" goto RUN_JUNITS_ONLY
-If "%FILEPATH%" == "" goto RUN_JUNITS_ONLY 
+If "%ACTION%" == "" goto success
+If "%FILEPATH%" == "" goto success 
 
 setLocal EnableDelayedExpansion
 set CLASSPATH=
@@ -74,14 +76,7 @@ Echo Executing ChainScript "%ACTION% %FILEPATH%"
 %JAVA_EXE%  -cp !CLASSPATH!;.\target\chainscript\ChainScript.jar;.\target\test-classes  com.stratumn.chainscript.ChainscriptTest  %ACTION% "%FILEPATH%"
 
 Goto success
-@REM ---------- RUN Unit tests ---------------
-Echo Running Junit Tests Only
-:RUN_JUNITS_ONLY
- 
-  call mvnw.cmd surefire:test
-
-Goto success
-
+  
 :error
 Echo No test are run.
 
