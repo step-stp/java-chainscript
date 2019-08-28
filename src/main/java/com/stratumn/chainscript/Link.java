@@ -55,7 +55,7 @@ public class Link {
     * A link is usually created as a result of an action.
     * 
     * @throws ChainscriptException
-    * @returns the link's action.
+    * @return the link's action.
     */
    public String action() throws ChainscriptException {
 
@@ -85,7 +85,7 @@ public class Link {
     * encoded and can be decoded.
     * 
     * @throws ChainscriptException
-    * @returns the link's client id.
+    * @return the link's client id.
     */
    public String clientId() throws ChainscriptException {
       return getLinkMeta().getClientId() == null ? "" : getLinkMeta().getClientId();
@@ -95,7 +95,7 @@ public class Link {
     * The link data (business logic details about the execution of a process step).
     * 
     * @throws ChainscriptException
-    * @returns the object containing the link details.
+    * @return the object containing the link details.
     */
    public Object data() throws ChainscriptException {
       this.verifyCompatibility();
@@ -119,7 +119,7 @@ public class Link {
    /***
     * Returns custom class
     * 
-    * @param clazz
+    * @param clazzOfT
     * @return
     * @throws ChainscriptException
     */
@@ -142,7 +142,7 @@ public class Link {
     * serialization and hashing algorithm used depend on the link version.
     * 
     * @throws ChainscriptException
-    * @returns the hash bytes.
+    * @return the hash bytes.
     */
    public byte[] hash() throws ChainscriptException {
       switch (this.version()) {
@@ -159,7 +159,7 @@ public class Link {
     * A link always belongs to a specific process map.
     * 
     * @throws ChainscriptException
-    * @returns the link's map id.
+    * @return the link's map id.
     */
    public String mapId() throws ChainscriptException {
       LinkMeta meta = getLinkMeta();
@@ -170,7 +170,7 @@ public class Link {
     * The link metadata can contain a custom object.
     * 
     * @throws ChainscriptException
-    * @returns the object containing the link metadata details.
+    * @return the object containing the link metadata details.
     */
    public Object metadata() throws ChainscriptException {
       this.verifyCompatibility();
@@ -219,7 +219,7 @@ public class Link {
     * the link is allowed to have as many children as it wants.
     * 
     * @throws ChainscriptException
-    * @returns the maximum number of children allowed.
+    * @return the maximum number of children allowed.
     */
    public int outDegree() throws ChainscriptException {
       return getLinkMeta().getOutDegree();
@@ -229,7 +229,7 @@ public class Link {
     * A link can have a parent, referenced by its link hash.
     * 
     * @throws ChainscriptException
-    * @returns the parent link hash.
+    * @return the parent link hash.
     */
    public byte[] prevLinkHash() throws ChainscriptException {
       if (getLinkMeta().getPrevLinkHash() == null) {
@@ -242,7 +242,7 @@ public class Link {
     * The priority can be used to order links.
     * 
     * @throws ChainscriptException
-    * @returns the link's priority.
+    * @return the link's priority.
     */
    public double priority() throws ChainscriptException {
       return getLinkMeta().getPriority();
@@ -252,7 +252,7 @@ public class Link {
     * A link always belong to an instance of a process.
     * 
     * @throws ChainscriptException
-    * @returns the link's process name.
+    * @return the link's process name.
     */
    public Process process() throws ChainscriptException {
       stratumn.chainscript.Chainscript.Process process = getLinkMeta().getProcess();
@@ -267,7 +267,7 @@ public class Link {
     * A link can contain references to other links.
     * 
     * @throws ChainscriptException
-    * @returns referenced links.
+    * @return referenced links.
     */
    public LinkReference[] refs() throws ChainscriptException {
       List<stratumn.chainscript.Chainscript.LinkReference> refList = getLinkMeta().getRefsList();
@@ -290,7 +290,7 @@ public class Link {
     * Create a segment from the link.
     * 
     * @throws ChainscriptException
-    * @returns the segment wrapping the link.
+    * @return the segment wrapping the link.
     */
    public Segment segmentify() throws ChainscriptException {
       stratumn.chainscript.Chainscript.Segment segment = stratumn.chainscript.Chainscript.Segment.newBuilder()
@@ -301,7 +301,7 @@ public class Link {
    /**
     * Serialize the link.
     * 
-    * @returns link bytes.
+    * @return link bytes.
     */
    public byte[] serialize() {
       return this.link.toByteArray();
@@ -377,7 +377,7 @@ public class Link {
    }
 
    /**
-    * @returns the link's signatures (if any).
+    * @return the link's signatures (if any).
     */
    public Signature[] signatures() {
       Signature[] signatures = new Signature[this.link.getSignaturesList().size()];
@@ -392,9 +392,9 @@ public class Link {
     * Compute the bytes that should be signed.
     * 
     * @throws ChainscriptException
-    * @argument version impacts how those bytes are computed.
-    * @argument payloadPath parts of the link that should be signed.
-    * @returns bytes to be signed.
+    * @param version     impacts how those bytes are computed.
+    * @param payloadPath parts of the link that should be signed.
+    * @return bytes to be signed.
     */
    public byte[] signedBytes(String version, String payloadPath) throws ChainscriptException {
       byte[] hashedResultBytes = null;
@@ -430,7 +430,7 @@ public class Link {
     * (Optional) A link can be interpreted as a step in a process.
     * 
     * @throws ChainscriptException
-    * @returns the corresponding process step.
+    * @return the corresponding process step.
     */
    public String step() throws ChainscriptException {
       return StringUtils.isEmpty(getLinkMeta().getStep()) ? "" : getLinkMeta().getStep();
@@ -441,7 +441,7 @@ public class Link {
     * results.
     * 
     * @throws ChainscriptException
-    * @returns link tags.
+    * @return link tags.
     */
    public String[] tags() throws ChainscriptException {
 
@@ -492,7 +492,7 @@ public class Link {
    /**
     * The link version is used to properly serialize and deserialize it.
     * 
-    * @returns the link version.
+    * @return the link version.
     */
    public String version() {
       return this.link.getVersion();
@@ -563,7 +563,7 @@ public class Link {
     * 
     * @param linkBytes encoded bytes.
     * @throws ChainscriptException
-    * @returns the deserialized link.
+    * @return the deserialized link.
     */
    public static Link deserialize(byte[] linkBytes) throws ChainscriptException {
       try {

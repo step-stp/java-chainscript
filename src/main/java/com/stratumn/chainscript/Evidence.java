@@ -12,7 +12,7 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
-*/ 
+*/
 package com.stratumn.chainscript;
 
 import java.io.IOException;
@@ -25,13 +25,11 @@ import com.stratumn.chainscript.utils.JsonHelper;
 
 /**
  * Evidences can be used to externally verify a link's existence at a given
- * moment in time.
- * An evidence can be a proof of inclusion in a public blockchain, a timestamp
- * signed by a trusted authority or anything that you trust to provide an
- * immutable ordering of your process' steps.
+ * moment in time. An evidence can be a proof of inclusion in a public
+ * blockchain, a timestamp signed by a trusted authority or anything that you
+ * trust to provide an immutable ordering of your process' steps.
  */
-public class Evidence
-{
+public class Evidence {
    /** Evidence version. Useful to correctly deserialize proof bytes. */
    private String version;
    /** Identifier of the evidence type. */
@@ -46,10 +44,9 @@ public class Evidence
     * @param backend
     * @param provider
     * @param proof
-    * @throws ChainscriptException 
+    * @throws ChainscriptException
     */
-   public Evidence(String version, String backend, String provider, byte[] proof) throws ChainscriptException
-   {
+   public Evidence(String version, String backend, String provider, byte[] proof) throws ChainscriptException {
       this.version = version;
       this.backend = backend;
       this.provider = provider;
@@ -58,147 +55,130 @@ public class Evidence
    }
 
    /**
-    * Validate that the evidence is well-formed.
-    * The proof is opaque bytes so it isn't validated here.
-    * @throws ChainscriptException 
+    * Validate that the evidence is well-formed. The proof is opaque bytes so it
+    * isn't validated here.
+    * 
+    * @throws ChainscriptException
     */
-   public void validate() throws ChainscriptException
-   {
-      if(StringUtils.isEmpty(this.version))
-      {
+   public void validate() throws ChainscriptException {
+      if (StringUtils.isEmpty(this.version)) {
          throw new ChainscriptException(Error.EvidenceVersionMissing);
       }
 
-      if(StringUtils.isEmpty(this.backend))
-      {
+      if (StringUtils.isEmpty(this.backend)) {
          throw new ChainscriptException(Error.EvidenceBackendMissing);
 
       }
 
-      if(StringUtils.isEmpty(this.provider))
-      {
+      if (StringUtils.isEmpty(this.provider)) {
          throw new ChainscriptException(Error.EvidenceProviderMissing);
       }
 
-      if(this.proof == null || this.proof.length == 0)
-      {
+      if (this.proof == null || this.proof.length == 0) {
          throw new ChainscriptException(Error.EvidenceProofMissing);
       }
    }
 
    /**
     * Serialize the evidence.
-    * @returns evidence bytes.
+    * 
+    * @return evidence bytes.
     */
-   public byte[] serialize()
-   {
-      return stratumn.chainscript.Chainscript.Evidence.newBuilder()
-         .setVersion(this.version)
-         .setBackend(this.backend)
-         .setProvider(this.provider)
-         .setProof(ByteString.copyFrom(this.proof)).build().toByteArray();
+   public byte[] serialize() {
+      return stratumn.chainscript.Chainscript.Evidence.newBuilder().setVersion(this.version).setBackend(this.backend)
+            .setProvider(this.provider).setProof(ByteString.copyFrom(this.proof)).build().toByteArray();
 
    }
 
    /**
     * @return the version
     */
-   public String getVersion()
-   {
+   public String getVersion() {
       return version;
    }
 
    /**
     * @param version the version to set
     */
-   public void setVersion(String version)
-   {
+   public void setVersion(String version) {
       this.version = version;
    }
 
    /**
     * @return the backend
     */
-   public String getBackend()
-   {
+   public String getBackend() {
       return backend;
    }
 
    /**
     * @param backend the backend to set
     */
-   public void setBackend(String backend)
-   {
+   public void setBackend(String backend) {
       this.backend = backend;
    }
 
    /**
     * @return the provider
     */
-   public String getProvider()
-   {
+   public String getProvider() {
       return provider;
    }
 
    /**
     * @param provider the provider to set
     */
-   public void setProvider(String provider)
-   {
+   public void setProvider(String provider) {
       this.provider = provider;
    }
 
    /**
     * @return the proof
     */
-   public byte[] getProof()
-   {
+   public byte[] getProof() {
       return proof;
    }
 
    /**
     * @param proof the proof to set
     */
-   public void setProof(byte[] proof)
-   {
+   public void setProof(byte[] proof) {
       this.proof = proof;
    }
-   
+
    /***
-    *  Convert to a json object.
+    * Convert to a json object.
+    * 
     * @return
     */
-   public String toObject() throws ChainscriptException
-   {
-      try
-      {
+   public String toObject() throws ChainscriptException {
+      try {
          return JsonHelper.toJson(toProto());
-      }
-      catch(IOException e)
-      {
-          throw new ChainscriptException(e);
+      } catch (IOException e) {
+         throw new ChainscriptException(e);
       }
    }
-   
+
    /***
-    * Convert a   json object to a link.
+    * Convert a json object to a link.
+    * 
     * @param jsonObject
     * @return
-    * @throws ChainscriptException 
+    * @throws ChainscriptException
     */
-   public static Evidence fromObject (String jsonObject) throws ChainscriptException
-   { 
-      stratumn.chainscript.Chainscript.Evidence e = JsonHelper.fromJson(jsonObject, stratumn.chainscript.Chainscript.Evidence.class);
-      return fromProto(e) ;
+   public static Evidence fromObject(String jsonObject) throws ChainscriptException {
+      stratumn.chainscript.Chainscript.Evidence e = JsonHelper.fromJson(jsonObject,
+            stratumn.chainscript.Chainscript.Evidence.class);
+      return fromProto(e);
    }
-   
+
    /**
     * Create an evidence from a protobuf object.
-    * @param e protobuf evidence.
-    * @throws ChainscriptException 
+    * 
+    * @param object protobuf evidence.
+    * @throws ChainscriptException
     */
-   public static Evidence fromProto(stratumn.chainscript.Chainscript.Evidence object) throws ChainscriptException  
-   {
+   public static Evidence fromProto(stratumn.chainscript.Chainscript.Evidence object) throws ChainscriptException {
       String version = StringUtils.isEmpty(object.getVersion()) ? "" : object.getVersion();
       String backend = StringUtils.isEmpty(object.getBackend()) ? "" : object.getBackend();
       String provider = StringUtils.isEmpty(object.getProvider()) ? "" : object.getProvider();
@@ -206,39 +186,33 @@ public class Evidence
 
       return new Evidence(version, backend, provider, proof);
    }
-   
+
    /***
     * Creates a protobuf object from this evidence obj.
+    * 
     * @return
     */
-   public  stratumn.chainscript.Chainscript.Evidence toProto( )
-   {
-      return stratumn.chainscript.Chainscript.Evidence.newBuilder()
-      .setBackend(this.backend).setVersion(this.getVersion())
-      .setProvider(this.provider).setProof(ByteString.copyFrom(this.proof)).build();
-      
+   public stratumn.chainscript.Chainscript.Evidence toProto() {
+      return stratumn.chainscript.Chainscript.Evidence.newBuilder().setBackend(this.backend)
+            .setVersion(this.getVersion()).setProvider(this.provider).setProof(ByteString.copyFrom(this.proof)).build();
+
    }
 
    /**
     * Deserialize an evidence.
+    * 
     * @param evidenceBytes encoded bytes.
-    * @throws ChainscriptException  
-    * @returns the deserialized evidence.
+    * @throws ChainscriptException
+    * @return the deserialized evidence.
     */
-   public static Evidence deserialize(byte[] evidenceBytes) throws ChainscriptException  
-   {
+   public static Evidence deserialize(byte[] evidenceBytes) throws ChainscriptException {
       stratumn.chainscript.Chainscript.Evidence pbEvidence;
-      try
-      {
+      try {
          pbEvidence = stratumn.chainscript.Chainscript.Evidence.parseFrom(evidenceBytes);
-      }
-      catch(InvalidProtocolBufferException e)
-      {
+      } catch (InvalidProtocolBufferException e) {
          throw new ChainscriptException(e);
       }
       return fromProto(pbEvidence);
    }
-   
-   
-   
+
 }

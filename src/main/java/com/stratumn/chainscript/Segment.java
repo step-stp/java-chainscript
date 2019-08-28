@@ -12,7 +12,7 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
-*/ 
+*/
 package com.stratumn.chainscript;
 
 import java.io.IOException;
@@ -27,68 +27,65 @@ import com.stratumn.chainscript.utils.JsonHelper;
 import stratumn.chainscript.Chainscript.SegmentMeta;
 
 /***
- *  A segment describes an atomic step in your process.  
+ * A segment describes an atomic step in your process.
  */
-public class Segment
-{
+public class Segment {
    private stratumn.chainscript.Chainscript.Link pbLink;
    private stratumn.chainscript.Chainscript.Segment pbSegment;
 
    /**
     * @param pbSegment
-    * @throws ChainscriptException 
+    * @throws ChainscriptException
     */
-   public Segment(stratumn.chainscript.Chainscript.Segment pbSegment) throws ChainscriptException
-   {
-      if(!pbSegment.hasLink())
-      {
+   public Segment(stratumn.chainscript.Chainscript.Segment pbSegment) throws ChainscriptException {
+      if (!pbSegment.hasLink()) {
          throw new ChainscriptException(Error.LinkMissing);
       }
 
       this.pbLink = pbSegment.getLink();
       this.pbSegment = pbSegment;
-      if (pbSegment.getMeta()==null)
+      if (pbSegment.getMeta() == null)
          this.pbSegment = this.pbSegment.toBuilder().setMeta(SegmentMeta.getDefaultInstance()).build();
-      
+
       Link link = new Link(this.pbLink);
-      
+
       stratumn.chainscript.Chainscript.SegmentMeta segmentMeta = this.pbSegment.getMeta().toBuilder()
-         .setLinkHash(ByteString.copyFrom(link.hash())).build();
+            .setLinkHash(ByteString.copyFrom(link.hash())).build();
       this.pbSegment = this.pbSegment.toBuilder().setMeta(segmentMeta).build();
    }
 
    /**
-    * The segment can be enriched with evidence that the link was saved
-    * immutably somewhere.
+    * The segment can be enriched with evidence that the link was saved immutably
+    * somewhere.
+    * 
     * @param e evidence.
-    * @throws ChainscriptException 
+    * @throws ChainscriptException
     */
-   public void addEvidence(Evidence e) throws ChainscriptException
-   {
+   public void addEvidence(Evidence e) throws ChainscriptException {
       e.validate();
 
-      if(this.getEvidence(e.getBackend(), e.getProvider()) != null)
-      {
+      if (this.getEvidence(e.getBackend(), e.getProvider()) != null) {
          throw new ChainscriptException(Error.DuplicateEvidence);
       }
 
-      stratumn.chainscript.Chainscript.Evidence pbEvidence = stratumn.chainscript.Chainscript.Evidence.newBuilder().setVersion(e.getVersion()).setBackend(e.getBackend())
-         .setProvider(e.getProvider()).setProof(ByteString.copyFrom(e.getProof())).build();
-      this.pbSegment = this.pbSegment.toBuilder().setMeta(this.pbSegment.getMeta().toBuilder().addEvidences(pbEvidence).build()).build();
+      stratumn.chainscript.Chainscript.Evidence pbEvidence = stratumn.chainscript.Chainscript.Evidence.newBuilder()
+            .setVersion(e.getVersion()).setBackend(e.getBackend()).setProvider(e.getProvider())
+            .setProof(ByteString.copyFrom(e.getProof())).build();
+      this.pbSegment = this.pbSegment.toBuilder()
+            .setMeta(this.pbSegment.getMeta().toBuilder().addEvidences(pbEvidence).build()).build();
    }
 
    /**
     * Return all the evidences in this segment.
-    * @throws ChainscriptException 
-    * @returns evidences.
+    * 
+    * @throws ChainscriptException
+    * @return evidences.
     */
-   public Evidence[] evidences() throws ChainscriptException
-   {
+   public Evidence[] evidences() throws ChainscriptException {
       List<stratumn.chainscript.Chainscript.Evidence> evidences = this.pbSegment.getMeta().getEvidencesList();
 
       List<Evidence> result = new ArrayList<Evidence>();
-      for(stratumn.chainscript.Chainscript.Evidence evidence : evidences)
-      {
+      for (stratumn.chainscript.Chainscript.Evidence evidence : evidences) {
          result.add(Evidence.fromProto(evidence));
       }
       return result.toArray(new Evidence[result.size()]);
@@ -96,19 +93,17 @@ public class Segment
 
    /**
     * Return all the evidences of a specific backend.
+    * 
     * @param backend of the expected evidences.
-    * @throws ChainscriptException 
-    * @returns evidences.
+    * @throws ChainscriptException
+    * @return evidences.
     */
-   public Evidence[] findEvidences(String backend) throws ChainscriptException
-   {
+   public Evidence[] findEvidences(String backend) throws ChainscriptException {
       List<stratumn.chainscript.Chainscript.Evidence> evidences = this.pbSegment.getMeta().getEvidencesList();
 
       List<Evidence> result = new ArrayList<Evidence>();
-      for(stratumn.chainscript.Chainscript.Evidence evidence : evidences)
-      {
-         if(evidence.getBackend().equals(backend))
-         {
+      for (stratumn.chainscript.Chainscript.Evidence evidence : evidences) {
+         if (evidence.getBackend().equals(backend)) {
             result.add(Evidence.fromProto(evidence));
          }
       }
@@ -117,19 +112,17 @@ public class Segment
 
    /**
     * Retrieve the evidence for the given backend and provider (if one exists).
-    * @param backend evidence backend.
+    * 
+    * @param backend  evidence backend.
     * @param provider evidence backend instance.
-    * @throws ChainscriptException 
-    * @returns the evidence or null.
+    * @throws ChainscriptException
+    * @return the evidence or null.
     */
-   public Evidence getEvidence(String backend, String provider) throws ChainscriptException
-   {
+   public Evidence getEvidence(String backend, String provider) throws ChainscriptException {
       List<stratumn.chainscript.Chainscript.Evidence> evidences = this.pbSegment.getMeta().getEvidencesList();
 
-      for(stratumn.chainscript.Chainscript.Evidence evidence : evidences)
-      {
-         if(evidence.getBackend().equals(backend) && evidence.getProvider().equals(provider))
-         {
+      for (stratumn.chainscript.Chainscript.Evidence evidence : evidences) {
+         if (evidence.getBackend().equals(backend) && evidence.getProvider().equals(provider)) {
             return Evidence.fromProto(evidence);
          }
       }
@@ -138,105 +131,93 @@ public class Segment
 
    /**
     * The segment's link is its immutable part.
-    * @returns the segment's link.
+    * 
+    * @return the segment's link.
     */
-   public Link link()
-   {
+   public Link link() {
       return new Link(this.pbLink);
    }
 
    /**
     * Get the hash of the segment's link.
-    * @returns the link's hash.
+    * 
+    * @return the link's hash.
     */
-   public byte[] linkHash()
-   {
+   public byte[] linkHash() {
       return (this.pbSegment.getMeta().getLinkHash().toByteArray());
    }
 
    /**
     * Serialize the segment.
-    * @returns segment bytes.
+    * 
+    * @return segment bytes.
     */
-   public byte[] serialize()
-   {
+   public byte[] serialize() {
       return stratumn.chainscript.Chainscript.Segment.newBuilder(pbSegment).build().toByteArray();
    }
 
    /**
     * Validate checks for errors in a segment.
-    * @throws ChainscriptException 
+    * 
+    * @throws ChainscriptException
     */
-   public void validate() throws ChainscriptException
-   {
-      if(!this.pbSegment.hasMeta())
-      {
+   public void validate() throws ChainscriptException {
+      if (!this.pbSegment.hasMeta()) {
          throw new ChainscriptException(Error.SegmentMetaMissing);
       }
 
-      if(this.linkHash() == null || this.linkHash().length == 0)
-      {
+      if (this.linkHash() == null || this.linkHash().length == 0) {
          throw new ChainscriptException(Error.LinkHashMissing);
       }
 
-      if(!Base64.getEncoder().encodeToString(this.linkHash()).equals(Base64.getEncoder().encodeToString(this.link().hash())))
-      {
+      if (!Base64.getEncoder().encodeToString(this.linkHash())
+            .equals(Base64.getEncoder().encodeToString(this.link().hash()))) {
          throw new ChainscriptException(Error.LinkHashMismatch);
       }
 
       this.link().validate();
    }
 
-   
    /***
-    *  Convert to a json object.
+    * Convert to a json object.
+    * 
     * @return
     */
-   public String toObject() throws ChainscriptException
-   {
-      try
-      {
+   public String toObject() throws ChainscriptException {
+      try {
          return JsonHelper.toJson(this.pbSegment);
-      }
-      catch(IOException e)
-      {
-          throw new ChainscriptException(e);
+      } catch (IOException e) {
+         throw new ChainscriptException(e);
       }
    }
-   
+
    /***
-    * Convert a   json object to a link.
+    * Convert a json object to a link.
+    * 
     * @param jsonObject
     * @return
-    * @throws ChainscriptException 
+    * @throws ChainscriptException
     */
-   public static Segment fromObject (String jsonObject) throws ChainscriptException
-   { 
-      return new Segment( JsonHelper.fromJson(jsonObject, stratumn.chainscript.Chainscript.Segment.class) ); 
+   public static Segment fromObject(String jsonObject) throws ChainscriptException {
+      return new Segment(JsonHelper.fromJson(jsonObject, stratumn.chainscript.Chainscript.Segment.class));
    }
 
    /**
     * Deserialize a segment.
+    * 
     * @param segmentBytes encoded bytes.
-    * @throws ChainscriptException 
-    * @returns the deserialized segment.
+    * @throws ChainscriptException
+    * @return the deserialized segment.
     */
-   public static Segment deserialize(byte[] segmentBytes) throws ChainscriptException
-   {
-     
+   public static Segment deserialize(byte[] segmentBytes) throws ChainscriptException {
+
       stratumn.chainscript.Chainscript.Segment segment;
-      try
-      {
+      try {
          segment = stratumn.chainscript.Chainscript.Segment.parseFrom(segmentBytes);
-      }
-      catch(InvalidProtocolBufferException e)
-      {
-          throw new ChainscriptException("Failed to parse segment.");
+      } catch (InvalidProtocolBufferException e) {
+         throw new ChainscriptException("Failed to parse segment.");
       }
       return new Segment(segment);
    }
-   
-   
-  
 
 }
