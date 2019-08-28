@@ -15,7 +15,6 @@
 */
 package com.stratumn.chainscript;
 
-import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -174,11 +173,9 @@ public class Signature {
     * @return
     */
    public String toObject() throws ChainscriptException {
-      try {
-         return JsonHelper.toJson(this.signature);
-      } catch (IOException e) {
-         throw new ChainscriptException(e);
-      }
+
+      return JsonHelper.toJson(this.signature);
+
    }
 
    /***

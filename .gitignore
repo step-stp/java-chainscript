@@ -23,7 +23,7 @@ hs_err_pid*
 target
 .classpath
 .project
-release.properties
-pom.xml.releaseBackup
 
 1.0.0_T.json
+release.properties
+pom.xml.releaseBackup

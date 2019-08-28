@@ -540,12 +540,10 @@ public class Link {
     * 
     * @return
     */
-   public String toObject() throws ChainscriptException {
-      try {
-         return JsonHelper.toJson(this.link);
-      } catch (IOException e) {
-         throw new ChainscriptException(e);
-      }
+   public String toObject() {
+
+      return JsonHelper.toJson(this.link);
+
    }
 
    /***

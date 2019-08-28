@@ -15,7 +15,6 @@
 */
 package com.stratumn.chainscript;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -184,11 +183,9 @@ public class Segment {
     * @return
     */
    public String toObject() throws ChainscriptException {
-      try {
-         return JsonHelper.toJson(this.pbSegment);
-      } catch (IOException e) {
-         throw new ChainscriptException(e);
-      }
+
+      return JsonHelper.toJson(this.pbSegment);
+
    }
 
    /***

@@ -15,8 +15,6 @@
 */
 package com.stratumn.chainscript;
 
-import java.io.IOException;
-
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.protobuf.ByteString;
@@ -151,12 +149,10 @@ public class Evidence {
     * 
     * @return
     */
-   public String toObject() throws ChainscriptException {
-      try {
-         return JsonHelper.toJson(toProto());
-      } catch (IOException e) {
-         throw new ChainscriptException(e);
-      }
+   public String toObject() {
+
+      return JsonHelper.toJson(toProto());
+
    }
 
    /***
