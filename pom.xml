@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.stratumn</groupId>
 	<artifactId>chainscript</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>Chainscript JAVA</name>
 	<description>java chainscript implementation </description>
 	<url>https://github.com/stratumn/java-chainscript</url>
@@ -83,7 +82,7 @@
     <connection>scm:git://github.com/stratumn/java-chainscript.git</connection>
     <url>https://github.com/stratumn/java-chainscript</url>
     <developerConnection>scm:git://github.com/stratumn/java-chainscript</developerConnection>
-    <tag>HEAD</tag>
+    <tag>chainscript-0.0.1</tag>
   </scm>
 
 	<developers>
