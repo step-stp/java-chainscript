@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.stratumn</groupId>
 	<artifactId>chainscript</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>Chainscript JAVA</name>
 	<description>java chainscript implementation </description>
 	<url>https://github.com/stratumn/java-chainscript</url>
@@ -82,7 +82,7 @@
     <connection>scm:git://github.com/stratumn/java-chainscript.git</connection>
     <url>https://github.com/stratumn/java-chainscript</url>
     <developerConnection>scm:git://github.com/stratumn/java-chainscript</developerConnection>
-    <tag>chainscript-0.0.2</tag>
+    <tag>HEAD</tag>
   </scm>
 
 	<developers>
