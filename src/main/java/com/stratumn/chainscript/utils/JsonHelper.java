@@ -26,7 +26,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.stratumn.canonicaljson.CanonicalJson;
-
 /***
  * 
  * Wrapper for Json Library Registers type adapter for chainscript types
@@ -56,7 +55,6 @@ public class JsonHelper {
                      new ProtoGsonAdapter<stratumn.chainscript.Chainscript.Evidence>(
                            stratumn.chainscript.Chainscript.Evidence.class));
          ;
-
          gsonBuilder.serializeNulls().disableHtmlEscaping();
       }
       return gsonBuilder;
@@ -79,6 +77,18 @@ public class JsonHelper {
 
    }
 
+   /***
+    * Registers a type adapter hierarchy on the internal gson builder 
+    * @param clazz
+    * @param typeAdapter
+    */
+   public static void registerTypeHierarchyAdapter (Class<?> clazz, Object typeAdapter)
+   {
+       
+      getGsonBuilder().registerTypeHierarchyAdapter( clazz, typeAdapter);
+      
+   }
+   
    /***
     * converts the json object to an object of the type specified.
     * 
@@ -116,7 +126,6 @@ public class JsonHelper {
    public static Map<String, Object> objectToMap(Object srcObject) {
       return (Map<String, Object>) objectToObject(srcObject, Map.class);
    }
-
    /***
     * Converts a map to an object of type T
     * 
@@ -131,29 +140,30 @@ public class JsonHelper {
    }
 
    /***
-    * Convenience method to map object to another Excample map to object or vice
-    * versa
-    * 
+    * Convenience method to map object to another 
+    * Excample map to object or vice versa
     * @param srcObj
-    * @param tClass
+    * @param tClasss
     * @return
     */
    @SuppressWarnings("unchecked")
-   public static <T> T objectToObject(Object srcObj, Class<T> tClass) {
-      T value = null;
-      if (tClass.isAssignableFrom(srcObj.getClass()))
-         value = (T) srcObj;
+   public static <T> T objectToObject(Object srcObj , Class<T> tClass)
+   {
+      T value =null;
+      if (srcObj==null ) return null;
+      if (tClass.isAssignableFrom(srcObj.getClass()) )
+         value= (T)srcObj;
       else {
-         String json;
+         String  json;
          if (srcObj instanceof JsonObject || srcObj instanceof String)
-            json = srcObj.toString();// json raw
-         else
-            json = toJson(srcObj);
-         value = fromJson(json, tClass);
+               json = srcObj.toString();//json raw
+         else 
+               json = toJson(srcObj);
+          value = fromJson(json,tClass);
       }
-      return value;
+      return value;  
    }
-
+   
    /***
     * Produces normal Json String
     * 

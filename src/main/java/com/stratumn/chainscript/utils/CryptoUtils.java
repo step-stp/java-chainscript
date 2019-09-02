@@ -63,7 +63,7 @@ public class CryptoUtils {
    public static String sign(PrivateKey key, byte[] message)
          throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
       Signature sgr = new EdDSAEngine(MessageDigest.getInstance(ed25519Spec.getHashAlgorithm()));
-      sgr.initSign(key);
+      sgr.initSign(key); 
       sgr.update(message);
       byte[] sig = sgr.sign();
       return CryptoUtils.encodeSignature(sig);
