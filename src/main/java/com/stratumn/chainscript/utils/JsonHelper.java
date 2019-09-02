@@ -143,7 +143,7 @@ public class JsonHelper {
     * Convenience method to map object to another 
     * Excample map to object or vice versa
     * @param srcObj
-    * @param tClasss
+    * @param tClass
     * @return
     */
    @SuppressWarnings("unchecked")
